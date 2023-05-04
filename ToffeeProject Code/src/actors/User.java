@@ -1,11 +1,9 @@
 package actors;
 
 
+
 import control.AuthenticationService;
 import control.shop_items.Cart;
-import gui.Message;
-
-import java.util.Scanner;
 
 import actors.Attachtments.Address;
 import control.shop_items.Cart;

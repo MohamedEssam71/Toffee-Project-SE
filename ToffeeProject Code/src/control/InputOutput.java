@@ -1,9 +1,11 @@
 package control;
 
-import actors.Address;
+import actors.Attachtments.Address;
 import actors.User;
 import gui.Message;
+import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class InputOutput {
@@ -21,9 +23,6 @@ public class InputOutput {
             String email = takeEmailInput();
             String password = takePasswordInput();
             String phoneNumber = takePhoneNumberInput();
-
-            System.out.println();
-
             Address address = takeAddressInput();
 
             user.setUserName(userName);
@@ -109,6 +108,7 @@ public class InputOutput {
         return null;
     }
     public Address takeAddressInput(){
+        System.out.println();
         Address address = new Address();
         String dataStr;
         Integer dataInt;
@@ -129,45 +129,88 @@ public class InputOutput {
         dataStr = scanner.nextLine();
         address.setStreet(dataStr);
 
-        System.out.print("Enter Building Number: ");
-        validateIntegerInput();
+        validateIntegerInput("Enter Building Number: ");
         dataInt = scanner.nextInt();
         address.setBuildingNumber(dataInt);
 
-        System.out.print("Enter Floor Number: ");
-        validateIntegerInput();
+        validateIntegerInput("Enter Floor Number: ");
         dataInt = scanner.nextInt();
         address.setFloor(dataInt);
 
-        System.out.print("Enter Flat Number: ");
-        validateIntegerInput();
+        validateIntegerInput("Enter Flat Number: ");
         dataInt = scanner.nextInt();
         address.setFlatNumber(dataInt);
 
         return address;
     }
     public Integer checkOutOptions(){
-        String info = "Proceeding Check out ... \n " +
-                "Please Choose one Option: \n " +
-                "1.Enter a new Address. \n " +
+        String info = "Proceeding Check out ... \n\n " +
+                "<<< Available Options >>> \n" +
+                "1.Enter a new Address. \n" +
                 "2.Use Address on System. \n";
         messageBox.createMessage(info,'W');
-        validateIntegerInput();
-        Integer choice = scanner.nextInt();
-        return choice;
+
+        boolean isValidInput = false;
+        while(!isValidInput){
+            validateIntegerInput("Enter Option Number: ");
+            Integer choice = scanner.nextInt();
+            isValidInput = checkCertainNumber(choice,1,2);
+
+            if(isValidInput){
+                scanner.nextLine();
+                return choice;
+            }
+
+        }
+        return null;
     }
 
-    public void validateIntegerInput(){
+    public Integer orderOptions(){
+        String info = "Proceeding Check out ... \n\n " +
+                " ".repeat(7)+"<<< Available Options >>> \n" +
+                "1.Confirm Order. \n" +
+                "2.Decline Order (return to catalog page). \n";
+        messageBox.createMessage(info,'W');
+
+        boolean isValidInput = false;
+        while(!isValidInput){
+            validateIntegerInput("Enter Option Number: ");
+            Integer choice = scanner.nextInt();
+            isValidInput = checkCertainNumber(choice,1,2);
+            if(isValidInput){
+                scanner.nextLine();
+                return choice;
+            }
+        }
+        return null;
+    }
+    public void validateIntegerInput(String option){
         boolean isInt = false;
+
         while(!isInt){
             try {
+                System.out.print(option);
                 isInt = scanner.hasNextInt();
+                if(!isInt) throw new IOException();
             }
             catch (Exception err){
+                scanner.nextLine();
                 messageBox.createMessage("Please Enter a Number not String !",'R');
+
             }
         }
     }
 
+    public boolean checkCertainNumber(int chosenOption,int @NotNull ...availableOptions){
+        for(int i : availableOptions){
+            if(chosenOption != i){
+                continue;
+            }
+            return true;
+        }
+        scanner.nextLine();
+        messageBox.createMessage("Option is not available",'R');
+        return false;
+    }
 
 }
