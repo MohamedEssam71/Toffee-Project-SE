@@ -1,9 +1,15 @@
 package actors;
 
+
 import control.Authentication.AuthenticationService;
 import gui.Message;
 
-import java.util.Scanner;
+import control.shop_items.Cart;
+
+import actors.Attachtments.Address;
+import control.shop_items.Cart;
+
+
 
 public class User {
     private String userName;
@@ -13,6 +19,10 @@ public class User {
     private Integer loyaltyPoints;
     private boolean isLoggedIn;
     private Address address;
+    private Cart cart;
+
+
+
 
     public User(String userName, String email, String password, String phoneNumber){
         this.email = email;
@@ -76,5 +86,13 @@ public class User {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }
