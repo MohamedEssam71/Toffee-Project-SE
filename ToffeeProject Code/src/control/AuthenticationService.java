@@ -16,7 +16,6 @@ public class AuthenticationService {
 
     }
 
-    ;
 
     public boolean validateEmail(String email) {
         Pattern emailPattern = Pattern.compile("[\\w]+(.|_)?(\\w*[^.]([.]?\\w+)?)@(\\w+)(.[\\w]+)?");
@@ -24,13 +23,13 @@ public class AuthenticationService {
         return emailMatcher.matches();
     }
 
-    ;
+
 
     public boolean validatePhone(String phoneNumber) {
         return Pattern.matches("01[0|1|2|5]\\d{8}", phoneNumber);
     }
 
-    ;
+
 
     public boolean register(User user) {
         UserDataBase userDataBase = new UserDataBase();
