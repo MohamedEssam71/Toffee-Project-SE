@@ -1,7 +1,13 @@
 package actors;
 
+
+
+import control.AuthenticationService;
+import control.shop_items.Cart;
+
 import actors.Attachtments.Address;
 import control.shop_items.Cart;
+
 
 public class User {
     private String userName;
