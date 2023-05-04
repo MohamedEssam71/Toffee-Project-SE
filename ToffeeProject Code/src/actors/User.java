@@ -1,10 +1,7 @@
 package actors;
 
-import control.AuthenticationService;
+import actors.Attachtments.Address;
 import control.shop_items.Cart;
-import gui.Message;
-
-import java.util.Scanner;
 
 public class User {
     private String userName;

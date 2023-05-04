@@ -1,14 +1,9 @@
 package gui;
 
-import actors.Address;
+import actors.Attachtments.Order;
 import actors.User;
-import control.AuthenticationService;
 import control.InputOutput;
 import control.PaymentMethod;
-import control.shop_items.Cart;
-import control.shop_items.Catalog;
-
-import java.util.Scanner;
 
 public class UserInterface {
     private InputOutput inputOutput = new InputOutput();
@@ -31,20 +26,33 @@ public class UserInterface {
        if(choice == 1) {
            user.setAddress(inputOutput.takeAddressInput());
        }
-       Order
-
+       Order order = new Order();
+       /*
+        order.adjustTotalPrice(cart);
+        order.adjustLoyaltyPoint(cart);
+        PaymentMethod paymentMethod = new Delivery();
+        order.showOrderDetails();
+       */
+        choice = inputOutput.orderOptions();
+        if(choice == 1) {
+            pay();
+        }
+        else{
+            showCatalog();
+        }
     }
 
 //    public PaymentMethod pay(){}
     public void showCatalog(){
 
     }
-
-
+    public void pay(){};
 
     public static void main(String[] args) {
         UserInterface userInterface = new UserInterface();
-        userInterface.register();
+        userInterface.checkOut();
+//        InputOutput inputOutput1 = new InputOutput();
+//        inputOutput1.takeAddressInput();
     }
 
 }
