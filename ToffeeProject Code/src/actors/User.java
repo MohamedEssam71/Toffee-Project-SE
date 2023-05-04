@@ -1,12 +1,14 @@
 package actors;
 
 
+import control.Authentication.AuthenticationService;
+import gui.Message;
 
-import control.AuthenticationService;
 import control.shop_items.Cart;
 
 import actors.Attachtments.Address;
 import control.shop_items.Cart;
+
 
 
 public class User {

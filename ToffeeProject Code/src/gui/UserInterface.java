@@ -2,6 +2,9 @@ package gui;
 
 import actors.Attachtments.Order;
 import actors.User;
+
+import control.Authentication.AuthenticationService;
+
 import control.InputOutput;
 import control.PaymentMethod;
 

@@ -1,19 +1,20 @@
-package control;
+package control.Authentication;
 
 import actors.User;
 import gui.Message;
 import model.UserDataBase;
 
 import java.io.*;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AuthenticationService {
-    public boolean validatePassword(String pass) {
-        Pattern passwordPattern = Pattern.compile("(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#?!@$%+^&_*-])\\S{8,}");
-        Matcher passwordMatcher = passwordPattern.matcher(pass);
-        return passwordMatcher.matches();
-
+    public boolean validatePassword(String password) {
+        String regex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\-!@#$%^&*_=+/.?<>]).{8,20}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
     }
 
 
@@ -39,6 +40,23 @@ public class AuthenticationService {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public void forgotPassword(String email) {
+        // OTP Manager Class
+        OTPManager otpManager = new OTPManager();
+        otpManager.generateOTP();
+//        otpManager.sendOTP("");
+        if (otpManager.verifyOTP()) {
+            System.out.println("OTPs Match!");
+//            System.out.println("Please Enter a New Password:");
+//            Scanner scanner = new Scanner(System.in);
+            //Should I get the user here and reset the password or shall another part handle this?
+
+        } else {
+            System.out.println("OTPs Don't Match!");
+            //How should I proceed here?
         }
     }
 }

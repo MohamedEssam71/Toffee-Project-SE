@@ -2,6 +2,7 @@ package control;
 
 import actors.Attachtments.Address;
 import actors.User;
+import control.Authentication.AuthenticationService;
 import gui.Message;
 import org.jetbrains.annotations.NotNull;
 
