@@ -1,9 +1,14 @@
 package actors;
 
+<<<<<<< Updated upstream
 import control.AuthenticationService;
 import gui.Message;
 
 import java.util.Scanner;
+=======
+import actors.Attachtments.Address;
+import control.shop_items.Cart;
+>>>>>>> Stashed changes
 
 public class User {
     private String userName;
