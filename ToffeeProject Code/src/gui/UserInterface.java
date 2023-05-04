@@ -52,10 +52,14 @@ public class UserInterface {
     public void pay(){};
 
     public static void main(String[] args) {
-        UserInterface userInterface = new UserInterface();
-        userInterface.checkOut();
+//        UserInterface userInterface = new UserInterface();
+//        userInterface.checkOut();
 //        InputOutput inputOutput1 = new InputOutput();
 //        inputOutput1.takeAddressInput();
+        AuthenticationService authenticationService = new AuthenticationService();
+        Boolean isValid = authenticationService.validateEmail("rawan.11111@stud-fci..cu.edu");
+        System.out.println(isValid);
+
     }
 
 }

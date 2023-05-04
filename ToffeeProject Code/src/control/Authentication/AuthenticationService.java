@@ -19,11 +19,9 @@ public class AuthenticationService {
 
 
     public boolean validateEmail(String email) {
-        Pattern emailPattern = Pattern.compile("[\\w]+(.|_)?(\\w*[^.]([.]?\\w+)?)@(\\w+)(.[\\w]+)?");
-        Matcher emailMatcher = emailPattern.matcher(email);
-        return emailMatcher.matches();
+        String pattern = "^(?![.\\-_+])([aA-zZ0-9_+-][.]?)+@[aA-zZ0-9_+-]+\\.(?!\\.)([aA-zZ0-9_+-][.]?)+$";
+        return email.matches(pattern);
     }
-
 
 
     public boolean validatePhone(String phoneNumber) {
@@ -43,6 +41,15 @@ public class AuthenticationService {
         }
     }
 
+    public boolean login(String email, String password) {
+        UserDataBase userDataBase = new UserDataBase();
+        //return userDataBase.checkUserCredentials(email,password);
+        return true;
+    }
+
+    public void logout() {
+        //call run function
+    }
     public void forgotPassword(String email) {
         // OTP Manager Class
         OTPManager otpManager = new OTPManager();
