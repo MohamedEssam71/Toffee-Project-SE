@@ -32,7 +32,7 @@ public class UserInterface {
             do {
                 System.out.print("Enter Email: ");
                 String email = scanner.nextLine();
-                isValidEmail = authenticationService.checkEmail(email);
+                isValidEmail = authenticationService.validateEmail(email);
 
                 if (!isValidEmail) {
                     messageBox.createMessage("Email is not Valid", 'R');
@@ -47,7 +47,7 @@ public class UserInterface {
                 do {
                     System.out.print("Enter Password: ");
                     pass = scanner.nextLine();
-                    isValidPass = authenticationService.checkPassword(pass);
+                    isValidPass = authenticationService.validatePassword(pass);
                     if (!isValidPass) {
                         messageBox.createMessage("Password is not Strong Enough", 'R');
                     }
@@ -68,7 +68,7 @@ public class UserInterface {
             do {
                 System.out.print("Enter Phone Number: ");
                 String phoneNumber = scanner.nextLine();
-                isValidPhone = authenticationService.checkPhone(phoneNumber);
+                isValidPhone = authenticationService.validatePhone(phoneNumber);
                 if (!isValidPhone) {
                     messageBox.createMessage("Phone number isn't Correct", 'R');
                 } else {

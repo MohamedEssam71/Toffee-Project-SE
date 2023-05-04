@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AuthenticationService {
-    public boolean checkPassword(String pass) {
+    public boolean validatePassword(String pass) {
         Pattern passwordPattern = Pattern.compile("(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#?!@$%+^&_*-])\\S{8,}");
         Matcher passwordMatcher = passwordPattern.matcher(pass);
         return passwordMatcher.matches();
@@ -18,7 +18,7 @@ public class AuthenticationService {
 
     ;
 
-    public boolean checkEmail(String email) {
+    public boolean validateEmail(String email) {
         Pattern emailPattern = Pattern.compile("[\\w]+(.|_)?(\\w*[^.]([.]?\\w+)?)@(\\w+)(.[\\w]+)?");
         Matcher emailMatcher = emailPattern.matcher(email);
         return emailMatcher.matches();
@@ -26,7 +26,7 @@ public class AuthenticationService {
 
     ;
 
-    public boolean checkPhone(String phoneNumber) {
+    public boolean validatePhone(String phoneNumber) {
         return Pattern.matches("01[0|1|2|5]\\d{8}", phoneNumber);
     }
 
