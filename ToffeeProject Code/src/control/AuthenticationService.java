@@ -9,11 +9,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AuthenticationService {
-    public boolean validatePassword(String pass) {
-        Pattern passwordPattern = Pattern.compile("(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#?!@$%+^&_*-])\\S{8,}");
-        Matcher passwordMatcher = passwordPattern.matcher(pass);
-        return passwordMatcher.matches();
-
+    public boolean validatePassword(String password) {
+        String regex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\-!@#$%^&*_=+/.?<>]).{8,20}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
     }
 
 
