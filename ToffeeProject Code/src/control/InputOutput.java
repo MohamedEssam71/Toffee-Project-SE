@@ -23,7 +23,7 @@ public class InputOutput {
             String phoneNumber = takePhoneNumberInput();
 
             System.out.println();
-            
+
             Address address = takeAddressInput();
 
             user.setUserName(userName);
@@ -130,18 +130,43 @@ public class InputOutput {
         address.setStreet(dataStr);
 
         System.out.print("Enter Building Number: ");
+        validateIntegerInput();
         dataInt = scanner.nextInt();
         address.setBuildingNumber(dataInt);
 
         System.out.print("Enter Floor Number: ");
+        validateIntegerInput();
         dataInt = scanner.nextInt();
         address.setFloor(dataInt);
 
         System.out.print("Enter Flat Number: ");
+        validateIntegerInput();
         dataInt = scanner.nextInt();
         address.setFlatNumber(dataInt);
 
         return address;
+    }
+    public Integer checkOutOptions(){
+        String info = "Proceeding Check out ... \n " +
+                "Please Choose one Option: \n " +
+                "1.Enter a new Address. \n " +
+                "2.Use Address on System. \n";
+        messageBox.createMessage(info,'W');
+        validateIntegerInput();
+        Integer choice = scanner.nextInt();
+        return choice;
+    }
+
+    public void validateIntegerInput(){
+        boolean isInt = false;
+        while(!isInt){
+            try {
+                isInt = scanner.hasNextInt();
+            }
+            catch (Exception err){
+                messageBox.createMessage("Please Enter a Number not String !",'R');
+            }
+        }
     }
 
 
