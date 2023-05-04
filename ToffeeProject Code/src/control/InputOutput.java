@@ -2,6 +2,7 @@ package control;
 
 import actors.Address;
 import actors.User;
+import control.Authentication.AuthenticationService;
 import gui.Message;
 
 import java.util.Scanner;

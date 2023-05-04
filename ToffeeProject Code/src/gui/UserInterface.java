@@ -2,7 +2,7 @@ package gui;
 
 import actors.Address;
 import actors.User;
-import control.AuthenticationService;
+import control.Authentication.AuthenticationService;
 import control.InputOutput;
 
 import java.util.Scanner;

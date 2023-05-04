@@ -1,6 +1,6 @@
 package actors;
 
-import control.AuthenticationService;
+import control.Authentication.AuthenticationService;
 import gui.Message;
 
 import java.util.Scanner;
