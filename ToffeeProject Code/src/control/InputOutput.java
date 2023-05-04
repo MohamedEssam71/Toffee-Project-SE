@@ -214,4 +214,15 @@ public class InputOutput {
         return false;
     }
 
+    public void showCatalogInfo(String info, Integer CatalogSize){
+        info += "Choose any Item to show in details \n\n" +
+                " ".repeat(1)+" <<< Other Available Options >>> \n" +
+                Integer.toString(CatalogSize+1) + ".Add Item to Cart. \n" +
+                Integer.toString(CatalogSize+2) + ".Show Cart. \n";
+
+        messageBox.createMessage(info,'W');
+    }
+    public void catalogOptions(){
+
+    }
 }
