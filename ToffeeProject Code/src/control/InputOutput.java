@@ -14,7 +14,7 @@ public class InputOutput {
     public User takeUserInput(){
         User user = new User();
 
-        boolean isRegistered, firstTime = true;
+        boolean isRegistered;
         do {
             registerForm();
             String userName = takeUserNameInput();
@@ -23,16 +23,14 @@ public class InputOutput {
             String phoneNumber = takePhoneNumberInput();
 
             System.out.println();
+            
+            Address address = takeAddressInput();
 
-            while(firstTime){
-                Address address = takeAddressInput();
-                user.setAddress(address);
-                firstTime = false;
-            }
             user.setUserName(userName);
             user.setEmail(email);
             user.setPassword(password);
             user.setPhoneNumber(phoneNumber);
+            user.setAddress(address);
 
             isRegistered = authenticationService.register(user);
             if (!isRegistered) {
