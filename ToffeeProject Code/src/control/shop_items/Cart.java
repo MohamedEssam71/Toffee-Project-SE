@@ -12,5 +12,7 @@ public class Cart {
         itemsList.remove(item);
     };
 
-
+    public ArrayList<Item> getItemsList() {
+        return itemsList;
+    }
 }
