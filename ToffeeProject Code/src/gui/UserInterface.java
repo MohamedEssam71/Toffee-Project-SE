@@ -21,7 +21,7 @@ public class UserInterface {
         return user;
     }
 
-    public void forgetPassword(){}
+    public void forgotPassword(){}
 
     public void checkOut(){
         user.getCart();
@@ -29,7 +29,7 @@ public class UserInterface {
        if(choice == 1) {
            user.setAddress(inputOutput.takeAddressInput());
        }
-       Order order = new Order();
+       Order order = new Order(user);
        /*
         order.adjustTotalPrice(cart);
         order.adjustLoyaltyPoint(cart);
