@@ -20,7 +20,7 @@ public class Item {
     }
 
     public void applyDiscount(double discountAmount) {
-        itemStatus = ItemStatus.onSale;
+        itemStatus = ItemStatus.ON_SALE;
         price *= 100 - discountAmount;
     }
 
