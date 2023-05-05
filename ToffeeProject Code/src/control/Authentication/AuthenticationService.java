@@ -42,13 +42,17 @@ public class AuthenticationService {
     }
 
     public boolean login(String email, String password) {
+        User tmpUser = new User();
+        tmpUser.setEmail(email);
+        tmpUser.setPassword(password);
+
         UserDataBase userDataBase = new UserDataBase();
-        //return userDataBase.checkUserCredentials(email,password);
-        return true;
+
+        return userDataBase.checkIfUserFound(tmpUser);
     }
 
     public void logout() {
-        //call run function
+        //ToDo: call "run" function
     }
     public void forgotPassword(String email) {
         // OTP Manager Class
