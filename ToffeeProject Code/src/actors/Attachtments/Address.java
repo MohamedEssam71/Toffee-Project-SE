@@ -64,4 +64,8 @@ public class Address {
     public void setFlatNumber(Integer flatNumber) {
         this.flatNumber = flatNumber;
     }
+    public String toString() {
+        return governorate + ", " + district + ", " + street + ",\n"
+                + landmark + ", " + buildingNumber + ", " + floor + ", " + flatNumber;
+    }
 }

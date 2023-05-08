@@ -49,6 +49,11 @@ public class AuthenticationService {
         }
     }
 
+    /**
+     * This method sends an OTP to allow the user to reset
+     * his/her password.
+     * @param user This is the only parameter to the method
+     */
     public Boolean forgotPassword(@NotNull User user) {
         OTPManager otpManager = new OTPManager();
         otpManager.generateOTP();
@@ -56,6 +61,10 @@ public class AuthenticationService {
         return (otpManager.verifyOTP());
     }
 
+    /**
+     * This method allow the user to reset his/her password.
+     * @param user This is the only parameter to the method
+     */
     public void resetPassword(@NotNull User user) {
         InputOutput IO = new InputOutput();
         user.setPassword(IO.takePasswordInput());

@@ -7,46 +7,63 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
+/**
+ * <h1>Order of a User</h1>
+ * The Order program implements an application that
+ * simply has the order details of a user and Prints
+ * the output on the screen.
+ *
+ * @author  Maya Ayman
+ */
 public class Order {
-    private double totalPrice = 0;
-    private int loyaltyPoints;
-    private Cart cart;
+    private Double totalPrice = 0.0;
     private User customer;
-    private Address address;
 
+    /**
+     * The constructor initializes the customer and the totalPrice.
+     * @param customer This is the only parameter to the constructor
+     */
     public Order(@NotNull User customer) {
-        this.cart = customer.getCart();
         this.customer = customer;
-        this.loyaltyPoints = customer.getLoyaltyPoints();
-        this.address = customer.getAddress();
-        for (Map.Entry<Item, Integer> entry : cart.getItemsList().entrySet()) {
+        for (Map.Entry<Item, Integer> entry : customer.getCart().getItemsList().entrySet()) {
             totalPrice += entry.getKey().getPrice();
         }
+        totalPrice += 30;
+        adjustLoyaltyPoints();
     }
+    /**
+     * This method prints all the details of the order: items,
+     * quantity, price/unit, delivery, totalCost, new loyalty points balance,
+     * and shipping address.
+     */
     public void showOrderDetails() {
         String dashes = "-".repeat(14), line = "-".repeat(35);
         System.out.println("   " + dashes + "Receipt" + dashes);
         System.out.printf("   %-13s %-10s %-10s%n", "Item", "Qty.", "Price/Unit");
         System.out.println("   " + line);
         int cnt = 0;
-        for (Map.Entry<Item, Integer> entry : cart.getItemsList().entrySet()) {
+        for (Map.Entry<Item, Integer> entry : customer.getCart().getItemsList().entrySet()) {
             Item item = entry.getKey();
             int qty = entry.getValue();
             System.out.print(++cnt);
             System.out.print(". ");
-            System.out.printf("%-14s %-13d $%.2f%n", item.getName(), qty, item.getPrice());
+            System.out.printf("%-14s %-13d LE%.2f%n", item.getName(), qty, item.getPrice());
         }
+//        System.out.println("   " + line);
+//        System.out.println("Delivery: 30 LE");
+//        System.out.println("Total Cost: " + totalPrice.toString() + " LE");
+//        System.out.println("\nNew Loyalty Points Balance: " + customer.getLoyaltyPoints().toString());
+//        System.out.println("Shipping To: " + customer.getAddress().toString());
     }
-    public void adjustLoyaltyPoints() {
+    /**
+     * This method updates the loyalty balance of the customer by adding 50 pts.
+     */
+    private void adjustLoyaltyPoints() {
         int loyaltyPointsAdded = 50;
-        this.loyaltyPoints += loyaltyPointsAdded;
-        this.customer.setLoyaltyPoints(loyaltyPoints);
+        this.customer.setLoyaltyPoints(this.customer.getLoyaltyPoints() + loyaltyPointsAdded);
     }
-    public double getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
-    }
-    public double getLoyaltyPoints() {
-        return loyaltyPoints;
     }
 }
 
