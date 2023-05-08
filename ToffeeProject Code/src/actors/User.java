@@ -21,9 +21,6 @@ public class User {
     private Address address;
     private Cart cart;
 
-
-
-
     public User(String userName, String email, String password, String phoneNumber){
         this.email = email;
         this.userName = userName;

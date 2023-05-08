@@ -2,11 +2,13 @@ package control.Authentication;
 
 import actors.Attachtments.Order;
 import actors.User;
+import control.InputOutput;
 import control.shop_items.Cart;
 import control.shop_items.Item;
 import control.shop_items.ItemStatus;
 import gui.Message;
 import model.UserDataBase;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.util.Scanner;
@@ -47,11 +49,17 @@ public class AuthenticationService {
         }
     }
 
-    public Boolean forgotPassword(String email) {
+    public Boolean forgotPassword(@NotNull User user) {
         OTPManager otpManager = new OTPManager();
         otpManager.generateOTP();
-        otpManager.sendOTP(email);
+        otpManager.sendOTP(user.getEmail());
         return (otpManager.verifyOTP());
+    }
+
+    public void resetPassword(@NotNull User user) {
+        InputOutput IO = new InputOutput();
+        user.setPassword(IO.takePasswordInput());
+        System.out.println("Password has been reset successfully!");
     }
 
 //    public static void main(String[] args) {
