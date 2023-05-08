@@ -197,7 +197,7 @@ public class InputOutput {
         }
     }
 
-    public boolean checkCertainNumber(int chosenOption,int @NotNull ...availableOptions){
+    public boolean checkCertainNumber(int chosenOption,int  ...availableOptions){
         for(int i : availableOptions){
             if(chosenOption != i){
                 continue;
