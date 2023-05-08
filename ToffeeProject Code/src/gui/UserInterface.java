@@ -94,6 +94,7 @@ public class UserInterface {
     public void pay(){};
 
     public static void main(String[] args) {
+
         UserInterface userInterface = new UserInterface();
         DataBaseQueries dataBaseQueries = new DataBaseQueries();
         try {
@@ -109,8 +110,9 @@ public class UserInterface {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-//        InputOutput inputOutput1 = new InputOutput();
-//        inputOutput1.takeAddressInput();
+
+
+
     }
 
 }
