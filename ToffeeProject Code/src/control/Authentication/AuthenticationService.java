@@ -51,7 +51,6 @@ public class AuthenticationService {
     }
 
 
-    public void forgotPassword(String email) {
         // OTP Manager Class
     public Boolean forgotPassword(@NotNull User user) {
         OTPManager otpManager = new OTPManager();
