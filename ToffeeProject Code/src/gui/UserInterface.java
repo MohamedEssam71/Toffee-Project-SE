@@ -47,13 +47,13 @@ public class UserInterface {
 
 //    public PaymentMethod pay(){}
     public void showCatalog(){
-        String catalogStr = " ".repeat(7)+"<<<Toffee Catalog>>>\n";
-        for(int i = 0; i < catalog.getItemList().size(); ++i){
-            catalogStr +=  Integer.toString(i+1) + "." + catalog.getItemList().get(i).getName();
-            catalogStr += "\n";
-        }
-        inputOutput.showCatalogInfo(catalogStr,catalog.getItemList().size());
-        System.out.println("Enter Option Number: ");
+//        String catalogStr = " ".repeat(7)+"<<<Toffee Catalog>>>\n";
+//        for(int i = 0; i < catalog.getItemList().size(); ++i){
+//            catalogStr +=  Integer.toString(i+1) + "." + catalog.getItemList().get(i).getName();
+//            catalogStr += "\n";
+//        }
+//        inputOutput.showCatalogInfo(catalogStr,catalog.getItemList().size());
+//        System.out.println("Enter Option Number: ");
 
     }
     public void pay(){};
