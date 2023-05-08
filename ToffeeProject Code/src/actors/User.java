@@ -16,7 +16,7 @@ public class User {
     private String email;
     private String password;
     private String phoneNumber;
-    private Integer loyaltyPoints;
+    private Integer loyaltyPoints = 0;
     private boolean isLoggedIn;
     private Address address;
     private Cart cart;

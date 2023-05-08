@@ -5,6 +5,9 @@ import actors.User;
 import control.InputOutput;
 import control.PaymentMethod;
 import control.shop_items.Catalog;
+import model.DataBaseQueries;
+
+import java.sql.SQLException;
 
 public class UserInterface {
     private InputOutput inputOutput = new InputOutput();
@@ -12,7 +15,7 @@ public class UserInterface {
 
     private Catalog catalog = new Catalog();
 
-    public User register(){
+    public User register() throws SQLException {
         user = inputOutput.takeUserInput();
         return user;
     }
@@ -61,8 +64,20 @@ public class UserInterface {
 
     public static void main(String[] args) {
         UserInterface userInterface = new UserInterface();
+        DataBaseQueries dataBaseQueries = new DataBaseQueries();
+        try {
+            User user = dataBaseQueries.getUser("MRM");
+            System.out.println(user.getUserName());
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 //        userInterface.checkOut();
-        userInterface.showCatalog();
+        try {
+            userInterface.register();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 //        InputOutput inputOutput1 = new InputOutput();
 //        inputOutput1.takeAddressInput();
     }

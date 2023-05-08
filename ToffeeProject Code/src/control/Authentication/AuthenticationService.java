@@ -2,9 +2,11 @@ package control.Authentication;
 
 import actors.User;
 import gui.Message;
+import model.DataBaseQueries;
 import model.UserDataBase;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,11 +34,12 @@ public class AuthenticationService {
 
 
 
-    public boolean register(User user) {
-        UserDataBase userDataBase = new UserDataBase();
-        boolean isFound = userDataBase.checkIfUserFound(user);
+    public boolean register(User user) throws SQLException {
+//        UserDataBase userDataBase = new UserDataBase();
+        DataBaseQueries dataBaseQueries = new DataBaseQueries();
+        boolean isFound = dataBaseQueries.checkIfUserFound(user);
         if (!isFound) {
-            userDataBase.addUser(user);
+            dataBaseQueries.addUser(user);
             return true;
         } else {
             return false;

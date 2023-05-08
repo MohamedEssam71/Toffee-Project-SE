@@ -7,6 +7,7 @@ import gui.Message;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class InputOutput {
@@ -14,7 +15,7 @@ public class InputOutput {
     private final AuthenticationService authenticationService = new AuthenticationService();
     private final Message messageBox = new Message();
 
-    public User takeUserInput(){
+    public User takeUserInput() throws SQLException {
         User user = new User();
 
         boolean isRegistered;
@@ -38,7 +39,7 @@ public class InputOutput {
             }
         }while(!isRegistered);
 
-        messageBox.createMessage("User is Finally Registered",'G');
+        messageBox.createMessage("User is Finally Registered",'C');
         return user;
     }
     public void registerForm(){
