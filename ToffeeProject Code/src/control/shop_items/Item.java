@@ -18,6 +18,7 @@ public class Item {
         this.itemStatus = itemStatus;
         this.price = price;
     }
+    public Item(){};
 
     public void applyDiscount(double discountAmount) {
         itemStatus = ItemStatus.ON_SALE;
