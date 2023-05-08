@@ -1,6 +1,10 @@
 package control.Authentication;
 
+import actors.Attachtments.Order;
 import actors.User;
+import control.shop_items.Cart;
+import control.shop_items.Item;
+import control.shop_items.ItemStatus;
 import gui.Message;
 import model.DataBaseQueries;
 import model.UserDataBase;
@@ -46,22 +50,24 @@ public class AuthenticationService {
         }
     }
 
-    public void forgotPassword(String email) {
-        // OTP Manager Class
+    public Boolean forgotPassword(String email) {
         OTPManager otpManager = new OTPManager();
         otpManager.generateOTP();
-//        otpManager.sendOTP("");
-        if (otpManager.verifyOTP()) {
-            System.out.println("OTPs Match!");
-//            System.out.println("Please Enter a New Password:");
-//            Scanner scanner = new Scanner(System.in);
-            //Should I get the user here and reset the password or shall another part handle this?
-
-        } else {
-            System.out.println("OTPs Don't Match!");
-            //How should I proceed here?
-        }
+        otpManager.sendOTP(email);
+        return (otpManager.verifyOTP());
     }
+
+//    public static void main(String[] args) {
+//        AuthenticationService authenticationService = new AuthenticationService();
+//        if (authenticationService.forgotPassword("")) {
+//                System.out.println("OTPs Match!");
+////            reset password here
+////            System.out.println("Please Enter a New Password:");
+////            Scanner scanner = new Scanner(System.in);
+//        } else {
+//            System.out.println("Sorry...OTPs Don't Match!");
+//        }
+//    }
 }
 //    public static void main(String[] args) throws IOException {
 //
