@@ -7,12 +7,10 @@ import control.shop_items.Cart;
 import control.shop_items.Item;
 import control.shop_items.ItemStatus;
 import gui.Message;
-import model.DataBaseQueries;
 import model.UserDataBase;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
-import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,9 +25,11 @@ public class AuthenticationService {
 
 
     public boolean validateEmail(String email) {
-        String pattern = "^(?![.\\-_+])([aA-zZ0-9_+-][.]?)+@[aA-zZ0-9_+-]+\\.(?!\\.)([aA-zZ0-9_+-][.]?)+$";
-        return email.matches(pattern);
+        Pattern emailPattern = Pattern.compile("[\\w]+(.|_)?(\\w*[^.]([.]?\\w+)?)@(\\w+)(.[\\w]+)?");
+        Matcher emailMatcher = emailPattern.matcher(email);
+        return emailMatcher.matches();
     }
+
 
 
     public boolean validatePhone(String phoneNumber) {
@@ -38,20 +38,22 @@ public class AuthenticationService {
 
 
 
-    public boolean register(User user) throws SQLException {
-//        UserDataBase userDataBase = new UserDataBase();
-        DataBaseQueries dataBaseQueries = new DataBaseQueries();
-        boolean isFound = dataBaseQueries.checkIfUserFound(user);
+    public boolean register(User user) {
+        UserDataBase userDataBase = new UserDataBase();
+        boolean isFound = userDataBase.checkIfUserFound(user);
         if (!isFound) {
-            dataBaseQueries.addUser(user);
+            userDataBase.addUser(user);
             return true;
         } else {
             return false;
         }
     }
 
-
-        // OTP Manager Class
+    /**
+     * This method sends an OTP to allow the user to reset
+     * his/her password.
+     * @param user This is the only parameter to the method
+     */
     public Boolean forgotPassword(@NotNull User user) {
         OTPManager otpManager = new OTPManager();
         otpManager.generateOTP();
@@ -59,25 +61,15 @@ public class AuthenticationService {
         return (otpManager.verifyOTP());
     }
 
+    /**
+     * This method allow the user to reset his/her password.
+     * @param user This is the only parameter to the method
+     */
     public void resetPassword(@NotNull User user) {
         InputOutput IO = new InputOutput();
         user.setPassword(IO.takePasswordInput());
         System.out.println("Password has been reset successfully!");
     }
-    public boolean login(String email, String password) {
-        User tmpUser = new User();
-        tmpUser.setEmail(email);
-        tmpUser.setPassword(password);
-
-        UserDataBase userDataBase = new UserDataBase();
-
-        return userDataBase.checkIfUserFound(tmpUser);
-    }
-
-    public void logout() {
-        //ToDo: call "run" function
-    }
-
 
 //    public static void main(String[] args) {
 //        AuthenticationService authenticationService = new AuthenticationService();
