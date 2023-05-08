@@ -2,6 +2,10 @@ package actors.Attachtments;
 
 import actors.User;
 import control.shop_items.Cart;
+import control.shop_items.Item;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
 
 public class Order {
     private double totalPrice = 0;
@@ -10,17 +14,28 @@ public class Order {
     private User customer;
     private Address address;
 
-    public Order(User customer) {
+    public Order(@NotNull User customer) {
         this.cart = customer.getCart();
         this.customer = customer;
         this.loyaltyPoints = customer.getLoyaltyPoints();
         this.address = customer.getAddress();
-        for (int i = 0; i < cart.getItemsList().size(); ++i) {
-            totalPrice += cart.getItemsList().get(i).getPrice();
+        for (Map.Entry<Item, Integer> entry : cart.getItemsList().entrySet()) {
+            totalPrice += entry.getKey().getPrice();
         }
     }
     public void showOrderDetails() {
-        //Show Order details here in an ordered manner
+        String dashes = "-".repeat(14), line = "-".repeat(35);
+        System.out.println("   " + dashes + "Receipt" + dashes);
+        System.out.printf("   %-13s %-10s %-10s%n", "Item", "Qty.", "Price/Unit");
+        System.out.println("   " + line);
+        int cnt = 0;
+        for (Map.Entry<Item, Integer> entry : cart.getItemsList().entrySet()) {
+            Item item = entry.getKey();
+            int qty = entry.getValue();
+            System.out.print(++cnt);
+            System.out.print(". ");
+            System.out.printf("%-14s %-13d $%.2f%n", item.getName(), qty, item.getPrice());
+        }
     }
     public void adjustLoyaltyPoints() {
         int loyaltyPointsAdded = 50;

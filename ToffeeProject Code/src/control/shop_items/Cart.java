@@ -1,18 +1,20 @@
 package control.shop_items;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Cart {
-    private ArrayList<Item>itemsList;
+    private Map<Item, Integer> itemsList = new HashMap<>();
 
     public void addToCart(Item item){
-        itemsList.add(item);
-    };
+        itemsList.put(item, itemsList.getOrDefault(item, 0) + 1);
+    }
     public void removeFromCart(Item item){
         itemsList.remove(item);
-    };
+    }
 
-    public ArrayList<Item> getItemsList() {
+    public Map<Item, Integer> getItemsList() {
         return itemsList;
     }
+    public int getQty(Item item) { return itemsList.get(item); }
 }

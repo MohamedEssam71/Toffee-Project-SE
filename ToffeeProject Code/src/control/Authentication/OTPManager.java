@@ -10,34 +10,23 @@ public class OTPManager {
         String Capital_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String Small_chars = "abcdefghijklmnopqrstuvwxyz";
         String numbers = "0123456789";
-        String symbols = "!@#$%^&*_=+-/.?<>";
-        String values = Capital_chars + Small_chars + numbers + symbols;
+        String values = Capital_chars + Small_chars + numbers;
 
-        Random rndm_method = new Random();
-
+        Random random = new Random();
         StringBuilder password = new StringBuilder();
-
-        for (int i = 0; i <= 64; i++) {
-            password.append(values.charAt(rndm_method.nextInt(values.length())));
+        for (int i = 0; i <= 20; i++) {
+            password.append(values.charAt(random.nextInt(values.length())));
         }
 
-        setOTP(password.toString());
+        OTP = password.toString();
     }
     public void sendOTP(String email) {
-
+        System.out.println(OTP);
     }
     public boolean verifyOTP() {
         System.out.println("Please Enter the OTP:");
         Scanner scanner = new Scanner(System.in);
         String inOTP = scanner.nextLine();
         return Objects.equals(inOTP, OTP);
-    }
-
-    public String getOTP() {
-        return OTP;
-    }
-
-    public void setOTP(String OTP) {
-        this.OTP = OTP;
     }
 }

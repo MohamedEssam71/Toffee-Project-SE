@@ -6,7 +6,8 @@ import java.util.Arrays;
 
 public class Message {
     private static final String RED = "\u001B[31m";
-    private static final String GREEN = "\u001B[31m";
+    private static final String GREEN = "\u001B[32m";
+    private static final String CYAN = "\u001B[36m";
     private static final String RESET = "\u001B[0m";
 
     public void createMessage(@NotNull String message, char color) {
@@ -28,6 +29,12 @@ public class Message {
             case 'G': {
                 for (String msg : strArr) {
                     System.out.println("| " + GREEN + msg + RESET + " ".repeat(size - msg.length()) + " |");
+                }
+                break;
+            }
+            case 'C': {
+                for (String msg : strArr) {
+                    System.out.println("| " + CYAN + msg + RESET + " ".repeat(size - msg.length()) + " |");
                 }
                 break;
             }

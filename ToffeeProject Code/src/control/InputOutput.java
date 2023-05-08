@@ -7,14 +7,15 @@ import gui.Message;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class InputOutput {
-    private Scanner scanner = new Scanner(System.in);
-    private AuthenticationService authenticationService = new AuthenticationService();
-    private Message messageBox = new Message();
+    private final Scanner scanner = new Scanner(System.in);
+    private final AuthenticationService authenticationService = new AuthenticationService();
+    private final Message messageBox = new Message();
 
-    public User takeUserInput(){
+    public User takeUserInput() throws SQLException {
         User user = new User();
 
         boolean isRegistered;
@@ -38,7 +39,7 @@ public class InputOutput {
             }
         }while(!isRegistered);
 
-        messageBox.createMessage("User is Finally Registered",'G');
+        messageBox.createMessage("User is Finally Registered",'C');
         return user;
     }
     public void registerForm(){
@@ -149,21 +150,7 @@ public class InputOutput {
                 "<<< Available Options >>> \n" +
                 "1.Enter a new Address. \n" +
                 "2.Use Address on System. \n";
-        messageBox.createMessage(info,'W');
-
-        boolean isValidInput = false;
-        while(!isValidInput){
-            validateIntegerInput("Enter Option Number: ");
-            Integer choice = scanner.nextInt();
-            isValidInput = checkCertainNumber(choice,1,2);
-
-            if(isValidInput){
-                scanner.nextLine();
-                return choice;
-            }
-
-        }
-        return null;
+        return getInteger(info);
     }
 
     public Integer orderOptions(){
@@ -171,6 +158,11 @@ public class InputOutput {
                 " ".repeat(7)+"<<< Available Options >>> \n" +
                 "1.Confirm Order. \n" +
                 "2.Decline Order (return to catalog page). \n";
+        return getInteger(info);
+    }
+
+    @NotNull
+    public Integer getInteger(String info) {
         messageBox.createMessage(info,'W');
 
         boolean isValidInput = false;
@@ -178,13 +170,17 @@ public class InputOutput {
             validateIntegerInput("Enter Option Number: ");
             Integer choice = scanner.nextInt();
             isValidInput = checkCertainNumber(choice,1,2);
+
             if(isValidInput){
                 scanner.nextLine();
                 return choice;
             }
+
         }
         return null;
     }
+
+
     public void validateIntegerInput(String option){
         boolean isInt = false;
 
@@ -202,7 +198,7 @@ public class InputOutput {
         }
     }
 
-    public boolean checkCertainNumber(int chosenOption,int @NotNull ...availableOptions){
+    public boolean checkCertainNumber(int chosenOption,int  ...availableOptions){
         for(int i : availableOptions){
             if(chosenOption != i){
                 continue;
@@ -217,12 +213,19 @@ public class InputOutput {
     public void showCatalogInfo(String info, Integer CatalogSize){
         info += "Choose any Item to show in details \n\n" +
                 " ".repeat(1)+" <<< Other Available Options >>> \n" +
-                Integer.toString(CatalogSize+1) + ".Add Item to Cart. \n" +
-                Integer.toString(CatalogSize+2) + ".Show Cart. \n";
+                (CatalogSize + 1) + ".Add Item to Cart. \n" +
+                (CatalogSize + 2) + ".Show Cart. \n";
 
         messageBox.createMessage(info,'W');
     }
     public void catalogOptions(){
 
+    }
+    public Integer cartOptions(String cartStr){
+        cartStr += " <<< Available Options >>> \n" +
+                "1. Check Out. \n" +
+                "2. Back to Catalog.\n";
+
+        return getInteger(cartStr);
     }
 }
