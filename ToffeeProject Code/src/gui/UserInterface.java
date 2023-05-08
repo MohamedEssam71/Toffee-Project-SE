@@ -2,6 +2,7 @@ package gui;
 
 import actors.Attachtments.Order;
 import actors.User;
+import control.Authentication.AuthenticationService;
 import control.InputOutput;
 import control.PaymentMethod;
 import control.shop_items.Cart;
@@ -27,7 +28,12 @@ public class UserInterface {
         return user;
     }
 
-    public void forgotPassword(){}
+    public void forgotPassword(User user) {
+        AuthenticationService authenticationService = new AuthenticationService();
+        if (authenticationService.forgotPassword(user)) {
+            authenticationService.resetPassword(user);
+        }
+    }
 
     public void checkOut(){
         user.getCart();

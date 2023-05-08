@@ -14,14 +14,14 @@ public class OTPManager {
 
         Random random = new Random();
         StringBuilder password = new StringBuilder();
-        for (int i = 0; i <= 64; i++) {
+        for (int i = 0; i <= 20; i++) {
             password.append(values.charAt(random.nextInt(values.length())));
         }
 
         OTP = password.toString();
     }
     public void sendOTP(String email) {
-
+        System.out.println(OTP);
     }
     public boolean verifyOTP() {
         System.out.println("Please Enter the OTP:");
