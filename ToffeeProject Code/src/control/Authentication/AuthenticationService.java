@@ -65,6 +65,20 @@ public class AuthenticationService {
         user.setPassword(IO.takePasswordInput());
         System.out.println("Password has been reset successfully!");
     }
+    public boolean login(String email, String password) {
+        User tmpUser = new User();
+        tmpUser.setEmail(email);
+        tmpUser.setPassword(password);
+
+        UserDataBase userDataBase = new UserDataBase();
+
+        return userDataBase.checkIfUserFound(tmpUser);
+    }
+
+    public void logout() {
+        //ToDo: call "run" function
+    }
+
 
 //    public static void main(String[] args) {
 //        AuthenticationService authenticationService = new AuthenticationService();
