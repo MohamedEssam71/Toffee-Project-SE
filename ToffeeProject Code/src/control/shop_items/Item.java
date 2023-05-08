@@ -1,4 +1,12 @@
 package control.shop_items;
+/**
+ * This class represents an item in an
+ * online store. The item has a name, description,
+ * image, brand, unitType, itemStatus, and price.
+ *
+ * @author Maya Ayman
+ * @author Mohamed Essam
+ */
 public class Item {
     private String name;
     private String description;
@@ -6,8 +14,18 @@ public class Item {
     private String brand;
     private String unitType;
     private ItemStatus itemStatus;
-    private double price;
+    private Double price;
 
+    /**
+     * The constructor initializes all attributes of Item.
+     * @param name
+     * @param description
+     * @param brand
+     * @param image
+     * @param itemStatus
+     * @param price
+     * @param unitType
+     */
     public Item(String name, String description, String image, String brand,
                 String unitType, ItemStatus itemStatus, double price) {
         this.name = name;
@@ -18,8 +36,16 @@ public class Item {
         this.itemStatus = itemStatus;
         this.price = price;
     }
+    /**
+     * Default constructor
+     */
     public Item(){};
 
+    /**
+     * This method applies a certain
+     * amount of discount on an item
+     * @param discountAmount
+     */
     public void applyDiscount(double discountAmount) {
         itemStatus = ItemStatus.ON_SALE;
         price *= 100 - discountAmount;
