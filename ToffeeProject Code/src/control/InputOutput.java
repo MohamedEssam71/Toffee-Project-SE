@@ -221,4 +221,11 @@ public class InputOutput {
     public void catalogOptions(){
 
     }
+    public Integer cartOptions(String cartStr){
+        cartStr += " <<< Available Options >>> \n" +
+                "1. Check Out. \n" +
+                "2. Back to Catalog.\n";
+
+        return getInteger(cartStr);
+    }
 }

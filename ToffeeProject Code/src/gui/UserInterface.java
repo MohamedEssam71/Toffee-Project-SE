@@ -4,10 +4,13 @@ import actors.Attachtments.Order;
 import actors.User;
 import control.InputOutput;
 import control.PaymentMethod;
+import control.shop_items.Cart;
 import control.shop_items.Catalog;
+import control.shop_items.Item;
 import model.DataBaseQueries;
 
 import java.sql.SQLException;
+import java.util.Map;
 
 public class UserInterface {
     private InputOutput inputOutput = new InputOutput();
@@ -28,12 +31,12 @@ public class UserInterface {
 
     public void checkOut(){
         user.getCart();
-       Integer choice = inputOutput.checkOutOptions();
-       if(choice == 1) {
+        Integer choice = inputOutput.checkOutOptions();
+        if(choice == 1) {
            user.setAddress(inputOutput.takeAddressInput());
-       }
-       Order order = new Order(user);
-       /*
+        }
+        Order order = new Order(user);
+        /*
         order.adjustTotalPrice(cart);
         order.adjustLoyaltyPoint(cart);
         PaymentMethod paymentMethod = new Delivery();
@@ -59,7 +62,29 @@ public class UserInterface {
         inputOutput.showCatalogInfo(catalogStr,catalog.getItemList().size());
         System.out.println("Enter Option Number: ");
         */
+
     }
+    public void showCart(Cart cart){
+        String cartStr = " ".repeat(7)+"<<< User Cart >>>\n";
+        int cnt = 1;
+        for(Map.Entry<Item,Integer> crt: cart.getItemsList().entrySet()){
+            cartStr += Integer.toString(cnt) + "." + crt.getKey();
+            cartStr += " ".repeat(2) + "Quantity: " + crt.getValue() + ".\n";
+            cnt++;
+        }
+        Integer choice = inputOutput.cartOptions(cartStr);
+        switch (choice){
+            case 1:{
+                checkOut();
+                break;
+            }
+            case 2:{
+                showCatalog();
+                break;
+            }
+        }
+    }
+
     public void pay(){};
 
     public static void main(String[] args) {
