@@ -19,9 +19,43 @@ public class UserInterface {
     private User user = new User();
 
     private Catalog catalog = new Catalog();
+    public void systemSteps() throws InterruptedException {
+        Integer choice = inputOutput.mainMenu();
+        switch (choice){
+            case 1:{
+                logIn();
+                Thread.sleep(1000);
+                showCatalog();
+                break;
+            }
+            case 2:{
+                try {
+                    register();
+                    Thread.sleep(1000);
 
+                    logIn();
+
+                    Thread.sleep(1000);
+                    showCatalog();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            }
+            case 3:{
+                inputOutput.exit();
+                System.exit(0);
+                break;
+            }
+        }
+    }
     public UserInterface(){
-        inputOutput.mainMenu();
+        DataBaseQueries dataBaseQueries = new DataBaseQueries();
+        try {
+            catalog.setItems(dataBaseQueries.loadItems());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         // To be Continued ....33433
     }
     public User register() throws SQLException {
@@ -61,7 +95,6 @@ public class UserInterface {
         }
     }
 
-//    public PaymentMethod pay(){}
     public void showCatalog() throws InterruptedException {
         Integer choice = inputOutput.showCatalogInfo(catalog);
         int cnt, catalogSize = catalog.getItems().size();
@@ -109,15 +142,27 @@ public class UserInterface {
                 showCatalog();
             }
             else if(choice == catalogSize + 2){
+                if(user.getCart().getItemsList().isEmpty()){
+                    inputOutput.emptyCart();
+                    Thread.sleep(1000);
+                    showCatalog();
+                }
                 choice = showCart();
                 if(choice == 1){
                     checkOut();
-                } else{
+                } else if (choice == 2){
+                    showCatalog();
+                }
+                else{
+                    user.getCart().getItemsList().clear();
+                    inputOutput.clearCart();
+                    Thread.sleep(1000);
                     showCatalog();
                 }
             }
             else{
-
+                inputOutput.logOut();
+                systemSteps();
             }
         }
 
@@ -138,15 +183,20 @@ public class UserInterface {
     public static void main(String[] args) {
 
         UserInterface userInterface = new UserInterface();
-        DataBaseQueries dataBaseQueries = new DataBaseQueries();
+
         try {
-            userInterface.catalog.setItems(dataBaseQueries.loadItems());
-            userInterface.showCatalog();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            userInterface.systemSteps();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+//        try {
+
+//            userInterface.showCatalog();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
 
 //        try {
 //            User user = dataBaseQueries.getUser("MRM");

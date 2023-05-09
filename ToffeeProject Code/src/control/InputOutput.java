@@ -235,7 +235,7 @@ public class InputOutput {
                 " ".repeat(1)+" <<< Other Available Options >>> \n" +
                 (CatalogSize + 1) + ".Add Item to Cart. \n" +
                 (CatalogSize + 2) + ".Show Cart. \n" +
-                (CatalogSize + 3) + ".Go-Back to Main Page";
+                (CatalogSize + 3) + ".Log-Out.";
 
         return getInteger(catalogStr,CatalogSize+3);
     }
@@ -274,9 +274,10 @@ public class InputOutput {
     public Integer cartOptions(String cartStr){
         cartStr += " <<< Available Options >>> \n" +
                 "1. Check Out. \n" +
-                "2. Go Back to Catalog.\n";
+                "2. Go Back to Catalog.\n" +
+                "3.Empty Cart.\n";
 
-        return getInteger(cartStr,2);
+        return getInteger(cartStr,3);
     }
 
     public void itemAdded(){
@@ -289,5 +290,23 @@ public class InputOutput {
     public Integer mainMenu(){
        messageBox.mainMenuMsg();
        return getInteger("",3);
+    }
+    public void logOut(){
+        messageBox.createMessage("You have logged out",'C');
+    }
+    public void exit(){
+        String exitStr = "Thank You For Using our Application ! \n" +
+                "Authors: \n  " +
+                "Mohamed Essam. \n  " +
+                "Maya Ayman. \n  " +
+                "Rawan Younis. \n";
+        messageBox.createMessage(exitStr,'G');
+    }
+
+    public void clearCart(){
+        messageBox.createMessage("Cart has been cleared.",'C');
+    }
+    public void emptyCart(){
+        messageBox.createMessage("Cart is Empty !", 'R');
     }
 }
