@@ -2,7 +2,6 @@ package gui;
 
 import actors.Attachtments.Order;
 import actors.User;
-import control.Authentication.AuthenticationService;
 import control.DeliveryPay;
 import control.InputOutput;
 import control.PaymentMethod;
@@ -14,21 +13,38 @@ import model.DataBaseQueries;
 import java.sql.SQLException;
 import java.util.Map;
 
+/**
+ * <h3>User Interface Class</h3>
+ * This class takes care of application interface where user
+ * can interact with the system from this view class.
+ * @author Mohamed Essam
+ * @author Maya Ayman
+ * @author Rawan Younis
+ */
 public class UserInterface {
     private InputOutput inputOutput = new InputOutput();
     private User user = new User();
-
     private Catalog catalog = new Catalog();
+
+    /**
+     * This Method shows the system steps<br>
+     * from the main menu page to catalog page,<br>
+     * checkout page, receipt page ...
+     * @throws InterruptedException
+     */
     public void systemSteps() throws InterruptedException {
         Integer choice = inputOutput.mainMenu();
-        switch (choice){
-            case 1:{
+        switch (choice) {
+            case 1 -> {
                 logIn();
                 Thread.sleep(1000);
-                showCatalog();
-                break;
+                if (user == null) {
+                    systemSteps();
+                } else {
+                    showCatalog();
+                }
             }
-            case 2:{
+            case 2 -> {
                 try {
                     register();
                     Thread.sleep(1000);
@@ -40,15 +56,23 @@ public class UserInterface {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-                break;
             }
-            case 3:{
+            case 3 -> {
+                forgotPassword(user);
+                systemSteps();
+            }
+            case 4 -> {
                 inputOutput.exit();
                 System.exit(0);
-                break;
             }
         }
     }
+
+    /**
+     * Default Constructor.<br>
+     * It loads all the item data from the database,<br>
+     * and put it on the catalog page.
+     */
     public UserInterface(){
         DataBaseQueries dataBaseQueries = new DataBaseQueries();
         try {
@@ -56,24 +80,40 @@ public class UserInterface {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        // To be Continued ....33433
     }
+
+    /**
+     * This method used to register a new user to the system.
+     * @return
+     * @throws SQLException
+     */
     public User register() throws SQLException {
         user = inputOutput.takeUserInput();
         return user;
     }
 
+    /**
+     * This method used to log into the system.
+     * @return
+     */
     public User logIn(){
+        user = inputOutput.loginPage();
         return user;
     }
 
+    /**
+     * This method used to enter a new password for a registered user.
+     * @param user
+     */
     public void forgotPassword(User user) {
-        AuthenticationService authenticationService = new AuthenticationService();
-        if (authenticationService.forgotPassword(user)) {
-            authenticationService.resetPassword(user);
-        }
+        inputOutput.forgetPassword(user);
     }
 
+    /**
+     * This method contains check-out Logic.<br>
+     * It shows how system will react to the user input.
+     * @throws InterruptedException
+     */
     public void checkOut() throws InterruptedException {
         user.getCart();
         Integer choice = inputOutput.checkOutOptions();
@@ -94,7 +134,11 @@ public class UserInterface {
             showCatalog();
         }
     }
-
+    /**
+     * This method contains catalog Logic.<br>
+     * It shows how system will react to the user input.
+     * @throws InterruptedException
+     */
     public void showCatalog() throws InterruptedException {
         Integer choice = inputOutput.showCatalogInfo(catalog);
         int cnt, catalogSize = catalog.getItems().size();
@@ -110,18 +154,14 @@ public class UserInterface {
                 }
                 cnt++;
             }
-            switch (choice){
-                case 1:{
+            switch (choice) {
+                case 1 -> {
                     user.getCart().addToCart(itemNeeded);
                     inputOutput.itemAdded();
                     Thread.sleep(1000);
                     showCatalog();
-                    break;
                 }
-                case 2:{
-                    showCatalog();
-                    break;
-                }
+                case 2 -> showCatalog();
             }
         }
         else{ // Add from Catalog.
@@ -169,51 +209,22 @@ public class UserInterface {
 
     }
 
+    /**
+     * This method contains Cart Logic.<br>
+     * It shows how system will react to the user input.
+     * @return Integer
+     */
     public Integer showCart(){
-        Integer choice = inputOutput.showCart(user.getUserName(), user.getCart());
-        return choice;
+        return inputOutput.showCart(user.getUserName(), user.getCart());
     }
-
+    /**
+     * This method used to confirm or decline order.<br>
+     * and make cart empty after that.
+     */
     public void pay(){
         inputOutput.payDelivered();
         Cart cart = new Cart();
         user.setCart(cart);
-    };
-
-    public static void main(String[] args) {
-
-        UserInterface userInterface = new UserInterface();
-
-        try {
-            userInterface.systemSteps();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-//        try {
-
-//            userInterface.showCatalog();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-
-//        try {
-//            User user = dataBaseQueries.getUser("MRM");
-//            System.out.println(user.getUserName());
-//
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-////        userInterface.checkOut();
-//        try {
-//            userInterface.register();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-
-
-
     }
 
 }

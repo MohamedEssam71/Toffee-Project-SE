@@ -18,6 +18,7 @@ import java.util.Objects;
  *     <li>Print a certain query to the console.</li>
  *     <li>Load Item Menu from the System.</li>
  * </ol>
+ * @author Mohamed Essam
  */
 public class DataBaseQueries {
 
@@ -94,7 +95,7 @@ public class DataBaseQueries {
     }
 
     /**
-     * Check if a user if found in the system database or not.
+     * Check if a user is found in the system database or not.
      * @param user
      * @return boolean
      * @throws SQLException
@@ -109,11 +110,13 @@ public class DataBaseQueries {
             resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()){
-                if(Objects.equals(resultSet.getString(1), user.getUserName())){
-                    if(Objects.equals(resultSet.getString(2), user.getEmail())){
+
+                if(Objects.equals(resultSet.getString(2), user.getEmail())){
+                   if(Objects.equals(resultSet.getString(3),user.getPassword())){
                         return true;
-                    }
+                   }
                 }
+
             }
         }
         catch (SQLException err){
@@ -144,11 +147,11 @@ public class DataBaseQueries {
 
     /**
      * Get User Info from the Data Base and return to the System.
-     * @param userName
+     * @param email
      * @return User
      * @throws SQLException
      */
-    public User getUser(String userName) throws SQLException {
+    public User getUser(String email) throws SQLException {
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultSet;
@@ -156,8 +159,8 @@ public class DataBaseQueries {
         connection = DataBaseSystem.getConnection();
         User user = new User();
         try{
-            preparedStatement = connection.prepareStatement("SELECT * FROM User WHERE UserName = ?");
-            preparedStatement.setString(1,userName);
+            preparedStatement = connection.prepareStatement("SELECT * FROM User WHERE Email = ?");
+            preparedStatement.setString(1,email);
             resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()){
@@ -168,8 +171,7 @@ public class DataBaseQueries {
             System.out.println(err);
         }
         if(user.getEmail() == null){
-            Message messageBox = new Message();
-            messageBox.createMessage("User is Not in the System !",'R');
+            return null;
         }
         return user;
     }
@@ -257,23 +259,6 @@ public class DataBaseQueries {
         item.setPrice(resultSet.getDouble(6));
     }
 
-//    public static void main(String[] args) throws SQLException {
-//        DataBaseQueries dataBaseQuery = new DataBaseQueries();
-//        Address address = new Address("Giza","asd","sd","sda",45,5,8);
-//        User user = new User("test","mesaads","sddsda","0865421");
-//        user.setAddress(address);
-//        ArrayList<Item> items = dataBaseQuery.loadItems();
-//        for(int i = 0; i < items.size(); ++i){
-//            System.out.println(items.get(i).getName());
-//        }
-//        User user = dataBaseQuery.getUser("tes");
-//        System.out.println(user.getEmail());
-//        dataBaseQuery.addUser(user);
-//        dataBaseQuery.askQuery("SELECT * FROM User");
-//        dataBaseQuery.removeUser(user);
-//        dataBaseQuery.removeUser(user);
-//        dataBaseQuery.askQuery("SELECT * FROM User");
-//    }
 }
 
 

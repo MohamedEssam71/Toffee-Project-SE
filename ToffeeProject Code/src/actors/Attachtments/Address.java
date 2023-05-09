@@ -1,5 +1,11 @@
 package actors.Attachtments;
 
+/**
+ * <h3>Address Model Class</h3>
+ * It handle all address details about the user
+ * @author Mohamed Essam
+ * @author Maya Ayman
+ */
 public class Address {
     private String governorate;
     private String district;
@@ -64,6 +70,11 @@ public class Address {
     public void setFlatNumber(Integer flatNumber) {
         this.flatNumber = flatNumber;
     }
+
+    /**
+     * This method concatenates all address details in one String
+     * @return String
+     */
     public String toString() {
         return governorate + ", " + district + ", " + street + ",\n"
                 + landmark + ", " + buildingNumber + ", " + floor + ", " + flatNumber;

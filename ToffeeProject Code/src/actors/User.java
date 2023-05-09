@@ -1,16 +1,16 @@
 package actors;
 
 
-import control.Authentication.AuthenticationService;
-import gui.Message;
-
-import control.shop_items.Cart;
-
 import actors.Attachtments.Address;
 import control.shop_items.Cart;
 
 
-
+/**
+ * <h3>User Model Class</h3>
+ * It handle all the user data with cart, and address.
+ * Contains setters, and getters for the user.
+ * @author Mohamed Essam
+ */
 public class User {
     private String userName;
     private String email;
@@ -18,9 +18,16 @@ public class User {
     private String phoneNumber;
     private Integer loyaltyPoints = 0;
     private boolean isLoggedIn;
-    private Address address;
+    private Address address = new Address();
     private Cart cart = new Cart();
 
+    /**
+     * Constructor that initializes the user data.
+     * @param userName
+     * @param email
+     * @param password
+     * @param phoneNumber
+     */
     public User(String userName, String email, String password, String phoneNumber){
         this.email = email;
         this.userName = userName;
@@ -28,7 +35,12 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.loyaltyPoints = 0;
     }
-    public User(){};
+
+    /**
+     * Default Constructor
+     */
+    public User(){}
+
     public String getUserName() {
         return userName;
     }

@@ -4,6 +4,7 @@ import java.sql.*;
 /**
  * This Class is used to link the connection
  * between the program code and the database system.
+ * @author Mohamed Essam
  */
 public class DataBaseSystem {
     private static final String DRIVER = "org.sqlite.JDBC";

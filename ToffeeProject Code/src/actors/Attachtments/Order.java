@@ -1,7 +1,6 @@
 package actors.Attachtments;
 
 import actors.User;
-import control.shop_items.Cart;
 import control.shop_items.Item;
 import org.jetbrains.annotations.NotNull;
 

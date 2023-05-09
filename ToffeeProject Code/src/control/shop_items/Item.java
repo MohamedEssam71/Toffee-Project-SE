@@ -39,7 +39,7 @@ public class Item {
     /**
      * Default constructor
      */
-    public Item(){};
+    public Item(){}
 
     /**
      * This method applies a certain

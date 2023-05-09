@@ -4,12 +4,22 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
+/**
+ * <h3>Message Class</h3>
+ * This class handles all the msg format that appears to the user.
+ * @author Mohamed Essam
+ */
 public class Message {
     private static final String RED = "\u001B[31m";
     private static final String GREEN = "\u001B[32m";
     private static final String CYAN = "\u001B[36m";
     private static final String RESET = "\u001B[0m";
 
+    /**
+     * This method create a msg format with different colors to the text.
+     * @param message
+     * @param color
+     */
     public void createMessage(@NotNull String message, char color) {
         if(message.isEmpty()) {
             return;
@@ -52,6 +62,10 @@ public class Message {
         System.out.print(dashedLine);
         System.out.println('+');
     }
+
+    /**
+     * This method shows the main menu formate to the user.
+     */
     public void mainMenuMsg(){
         String dashedLine = "-".repeat(28 + 2);
         System.out.print('+');
@@ -61,7 +75,8 @@ public class Message {
                 + RESET + " ".repeat(8) + "|\n" +
                 "| 1.Log-In." + " ".repeat(20) + "|\n" +
                 "| 2.Register." + " ".repeat(18) + "|\n" +
-                "| 3.Exit." + " ".repeat(22) + "|\n" ;
+                "| 3.Forget Password." + " ".repeat(11) + "|\n" +
+                "| 4.Exit." + " ".repeat(22) + "|\n" ;
         System.out.print(mainMenuStr);
         System.out.print('+');
         System.out.print(dashedLine);

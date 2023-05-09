@@ -1,23 +1,43 @@
 package control.Authentication;
 
-import actors.Attachtments.Order;
 import actors.User;
 import control.InputOutput;
-import control.shop_items.Cart;
-import control.shop_items.Item;
-import control.shop_items.ItemStatus;
-import gui.Message;
 import model.DataBaseQueries;
-import model.UserDataBase;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.*;
 import java.sql.SQLException;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * <h3>Authentication Service Class</h3>
+ * It is used to handle all the authentication logic system.<br>
+ * Some of its methods:
+ * <ul>
+ *     <li>Register</li>
+ *     <li>Log-in</li>
+ *     <li>Forget Password</li>
+ *     <li>Validation methods/li>
+ * </ul>
+ * @author Maya Ayman
+ * @author Rawan Younis
+ * @author Mohamed Essam
+ */
 public class AuthenticationService {
+
+    /**
+     * This Method is used to validate Password Input.<br>
+     * <h3>Strong Password Specifications:</h3>
+     * <ul>
+     *     <li>Minimum length 8 characters.</li>
+     *     <li>Max length 20 characters.</li>
+     *     <li>At least one capital letter.</li>
+     *     <li>At least one small letter.</li>
+     *     <li>At least one symbol.</li>
+     * </ul>
+     * @param password
+     * @return boolean
+     */
     public boolean validatePassword(String password) {
         String regex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\-!@#$%^&*_=+/.?<>]).{8,20}$";
         Pattern pattern = Pattern.compile(regex);
@@ -25,7 +45,13 @@ public class AuthenticationService {
         return matcher.matches();
     }
 
-
+    /**
+     * This Method is used to validate Email Input.<br>
+     * Email input specifications:
+     * ???
+     * @param email
+     * @return boolean
+     */
     public boolean validateEmail(String email) {
         String pattern = "^(?!\\.|-|_|\\+)([aA-zZ0-9_+-](\\.)?)+" +
                 "@(?!\\.)[aA-zZ0-9_+-]+\\.(?!\\.)[a-zA-Z0-9-]+[a-zA-Z0-9-.]+$";
@@ -33,13 +59,25 @@ public class AuthenticationService {
     }
 
 
-
+    /**
+     * This Method is used to validate phone number of the user
+     * if it follows some certain guidelines.<br>
+     * eg: Number should start with {010,011,012,015}.
+     * @param phoneNumber
+     * @return boolean
+     */
     public boolean validatePhone(String phoneNumber) {
         return Pattern.matches("01[0|1|2|5]\\d{8}", phoneNumber);
     }
 
 
-
+    /**
+     * This Method is used to check if user found in the database or not,
+     * Then add user to the database.
+     * @param user
+     * @return boolean
+     * @throws SQLException
+     */
     public boolean register(User user) throws SQLException {
         DataBaseQueries userDataBase = new DataBaseQueries();
         boolean isFound = userDataBase.checkIfUserFound(user);
@@ -70,95 +108,35 @@ public class AuthenticationService {
     public void resetPassword(@NotNull User user) {
         InputOutput IO = new InputOutput();
         user.setPassword(IO.takePasswordInput());
-        System.out.println("Password has been reset successfully!");
     }
 
-    public Boolean login(String email, String password){
+    public boolean login(String email, String password){
         User tmpUser = new User();
         tmpUser.setPassword(password);
         tmpUser.setEmail(email);
 
-        UserDataBase userDataBase = new UserDataBase();
+        DataBaseQueries userDataBase = new DataBaseQueries();
+        boolean isFound = false;
+        try {
+            isFound = userDataBase.checkIfUserFound(tmpUser);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return isFound;
+    }
 
-        return userDataBase.checkIfUserFound(tmpUser);
+    public User getLoggedUser(String email){
+        DataBaseQueries userDataBase = new DataBaseQueries();
+        User user;
+        try {
+            user = userDataBase.getUser(email);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return user;
     }
 
     public void logout(){
-        //TODO: run();
+//        TODO: run();
     }
-//    public static void main(String[] args) {
-//        AuthenticationService authenticationService = new AuthenticationService();
-//        if (authenticationService.forgotPassword("")) {
-//                System.out.println("OTPs Match!");
-//            reset password here
-//            System.out.println("Please Enter a New Password:");
-//            Scanner scanner = new Scanner(System.in);
-//        } else {
-//            System.out.println("Sorry...OTPs Don't Match!");
-//        }
-//        System.out.println(authenticationService.validateEmail("rawann.1@fci-cu.com"));
-//    }
 }
-//    public static void main(String[] args) throws IOException {
-//
-//    }
-//        AuthenticationService  auth = new AuthenticationService();
-//        String pass = "MohamedEssam71";
-//        System.out.println(auth.checkPassword(pass));
-
-  //------------------------Use Threading to hide password -----------------------------
-
-//        ThreadDisappear td = new ThreadDisappear("Enter your password: ");
-//        Thread t = new Thread(td);
-//        t.start();
-//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//        try {
-//            String password = br.readLine();
-//            td.maskEnd();
-//            System.out.println("\nYour password is: " + password);
-//        } catch (IOException ioe) {
-//            ioe.printStackTrace();
-//        }
-
-//------------------------Use Console to hide password -----------------------------
-//        Console console = System.console();
-//        if (console == null) {
-//            System.out.println("Console not available");
-//            System.exit(1);
-//        }
-//
-//        char[] passwordArray = console.readPassword("Enter your password: ");
-//        String password = new String(passwordArray);
-//        Writer writer = new PrintWriter(System.out);
-//        writer.append("*".repeat(password.length()));
-//        writer.flush();
-//
-//
-//    }
-
-
-//}
-
-
-//class ThreadDisappear implements Runnable {
-//    private boolean end;
-//    public ThreadDisappear(String prompt) {
-//        System.out.print(prompt);
-//    }
-//    public void run() {
-//        end = true;
-//        while (end) {
-//            System.out.print("\010*");
-//            try {
-//                Thread.currentThread().sleep(1);
-//            } catch (InterruptedException ie) {
-//                ie.printStackTrace();
-//            }
-//        }
-//    }
-//
-//    public void maskEnd() {
-//        this.end = false;
-//
-//    }
-//}

@@ -1,7 +1,5 @@
 package control.shop_items;
 
-import control.Authentication.AuthenticationService;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
