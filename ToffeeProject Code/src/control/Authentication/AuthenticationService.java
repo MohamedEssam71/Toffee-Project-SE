@@ -27,9 +27,9 @@ public class AuthenticationService {
 
 
     public boolean validateEmail(String email) {
-        Pattern emailPattern = Pattern.compile("[\\w]+(.|_)?(\\w*[^.]([.]?\\w+)?)@(\\w+)(.[\\w]+)?");
-        Matcher emailMatcher = emailPattern.matcher(email);
-        return emailMatcher.matches();
+        String pattern = "^(?!\\.|-|_|\\+)([aA-zZ0-9_+-](\\.)?)+" +
+                "@(?!\\.)[aA-zZ0-9_+-]+\\.(?!\\.)[a-zA-Z0-9-]+[a-zA-Z0-9-.]+$";
+        return email.matches(pattern);
     }
 
 
@@ -77,12 +77,13 @@ public class AuthenticationService {
 //        AuthenticationService authenticationService = new AuthenticationService();
 //        if (authenticationService.forgotPassword("")) {
 //                System.out.println("OTPs Match!");
-////            reset password here
-////            System.out.println("Please Enter a New Password:");
-////            Scanner scanner = new Scanner(System.in);
+//            reset password here
+//            System.out.println("Please Enter a New Password:");
+//            Scanner scanner = new Scanner(System.in);
 //        } else {
 //            System.out.println("Sorry...OTPs Don't Match!");
 //        }
+//        System.out.println(authenticationService.validateEmail("rawann.1@fci-cu.com"));
 //    }
 }
 //    public static void main(String[] args) throws IOException {
