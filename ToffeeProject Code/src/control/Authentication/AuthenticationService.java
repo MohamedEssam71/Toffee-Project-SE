@@ -7,10 +7,12 @@ import control.shop_items.Cart;
 import control.shop_items.Item;
 import control.shop_items.ItemStatus;
 import gui.Message;
+import model.DataBaseQueries;
 import model.UserDataBase;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,8 +40,8 @@ public class AuthenticationService {
 
 
 
-    public boolean register(User user) {
-        UserDataBase userDataBase = new UserDataBase();
+    public boolean register(User user) throws SQLException {
+        DataBaseQueries userDataBase = new DataBaseQueries();
         boolean isFound = userDataBase.checkIfUserFound(user);
         if (!isFound) {
             userDataBase.addUser(user);

@@ -28,4 +28,5 @@ public class Catalog {
             itemsList.put(item.getName(),item);
         }
     }
+
 }

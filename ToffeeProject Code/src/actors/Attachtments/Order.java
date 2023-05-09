@@ -37,6 +37,7 @@ public class Order {
      * and shipping address.
      */
     public void showOrderDetails() {
+        System.out.println('\n');
         String dashes = "-".repeat(14), line = "-".repeat(35);
         System.out.println("   " + dashes + "Receipt" + dashes);
         System.out.printf("   %-13s %-10s %-10s%n", "Item", "Qty.", "Price/Unit");
@@ -47,8 +48,9 @@ public class Order {
             int qty = entry.getValue();
             System.out.print(++cnt);
             System.out.print(". ");
-            System.out.printf("%-14s %-13d LE%.2f%n", item.getName(), qty, item.getPrice());
+            System.out.printf("%-14s %-13d LE %.2f%n", item.getName(), qty, item.getPrice());
         }
+        System.out.println('\n');
 //        System.out.println("   " + line);
 //        System.out.println("Delivery: 30 LE");
 //        System.out.println("Total Cost: " + totalPrice.toString() + " LE");

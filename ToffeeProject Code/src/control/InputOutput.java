@@ -3,12 +3,15 @@ package control;
 import actors.Attachtments.Address;
 import actors.User;
 import control.Authentication.AuthenticationService;
+import control.shop_items.Cart;
+import control.shop_items.Catalog;
+import control.shop_items.Item;
 import gui.Message;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Scanner;
+import java.util.*;
 
 public class InputOutput {
     private final Scanner scanner = new Scanner(System.in);
@@ -24,12 +27,14 @@ public class InputOutput {
             String userName = takeUserNameInput();
             String email = takeEmailInput();
             String password = takePasswordInput();
+            String encodedPassword = Base64.getEncoder().encodeToString(password.getBytes());
+
             String phoneNumber = takePhoneNumberInput();
             Address address = takeAddressInput();
 
             user.setUserName(userName);
             user.setEmail(email);
-            user.setPassword(password);
+            user.setPassword(encodedPassword);
             user.setPhoneNumber(phoneNumber);
             user.setAddress(address);
 
@@ -145,12 +150,13 @@ public class InputOutput {
 
         return address;
     }
+
     public Integer checkOutOptions(){
         String info = "Proceeding Check out ... \n\n " +
                 "<<< Available Options >>> \n" +
                 "1.Enter a new Address. \n" +
                 "2.Use Address on System. \n";
-        return getInteger(info);
+        return getInteger(info,2);
     }
 
     public Integer orderOptions(){
@@ -158,24 +164,28 @@ public class InputOutput {
                 " ".repeat(7)+"<<< Available Options >>> \n" +
                 "1.Confirm Order. \n" +
                 "2.Decline Order (return to catalog page). \n";
-        return getInteger(info);
+        return getInteger(info,2);
     }
 
     @NotNull
-    public Integer getInteger(String info) {
+    public Integer getInteger(String info,int optionSize) {
         messageBox.createMessage(info,'W');
+
+        ArrayList<Integer> optionsNumber = new ArrayList<>();
+        for(int i = 1; i <= optionSize; ++i){
+            optionsNumber.add(i);
+        }
 
         boolean isValidInput = false;
         while(!isValidInput){
             validateIntegerInput("Enter Option Number: ");
             Integer choice = scanner.nextInt();
-            isValidInput = checkCertainNumber(choice,1,2);
+            isValidInput = checkCertainNumber(choice,optionsNumber);
 
             if(isValidInput){
                 scanner.nextLine();
                 return choice;
             }
-
         }
         return null;
     }
@@ -198,7 +208,7 @@ public class InputOutput {
         }
     }
 
-    public boolean checkCertainNumber(int chosenOption,int  ...availableOptions){
+    public boolean checkCertainNumber(int chosenOption, ArrayList<Integer> availableOptions){
         for(int i : availableOptions){
             if(chosenOption != i){
                 continue;
@@ -210,22 +220,74 @@ public class InputOutput {
         return false;
     }
 
-    public void showCatalogInfo(String info, Integer CatalogSize){
-        info += "Choose any Item to show in details \n\n" +
+    public Integer showCatalogInfo(Catalog catalog){
+        Integer CatalogSize = catalog.getItems().size();
+
+        String catalogStr = " ".repeat(7)+"<<<Toffee Catalog>>>\n";
+        int catalogSize = catalog.getItems().size();
+        int cnt = 1;
+        for(Map.Entry<String,Item> pair : catalog.getItems().entrySet()){
+            catalogStr +=  Integer.toString(cnt++) + "." + pair.getKey() +
+                    " ".repeat(28-pair.getKey().length()) + pair.getValue().getPrice() +" L.E";
+            catalogStr += "\n";
+        }
+        catalogStr += "Choose any Item to show in details \n\n" +
                 " ".repeat(1)+" <<< Other Available Options >>> \n" +
                 (CatalogSize + 1) + ".Add Item to Cart. \n" +
-                (CatalogSize + 2) + ".Show Cart. \n";
+                (CatalogSize + 2) + ".Show Cart. \n" +
+                (CatalogSize + 3) + ".Go-Back to Main Page";
 
-        messageBox.createMessage(info,'W');
+        return getInteger(catalogStr,CatalogSize+3);
     }
-    public void catalogOptions(){
 
+    public Integer showItemInfo(Item item){
+         String itemStr = " ".repeat(5) +
+                 "<<< " + item.getName() + " >>> \n" +
+                 "Description: " + item.getDescription() + ".\n" +
+                 "Brand: " + item.getBrand() + ".\n" +
+                 "Unit Type: " + item.getUnitType() + ".\n" +
+                 "Item Status: " + item.getItemStatus() + ".\n" +
+                 "Price: " + item.getPrice() + " L.E\n\n";
+
+         itemStr += "<<< Available Options >>> \n" +
+                 "1. Add Item to Cart.\n" +
+                 "2. Go Back to Catalog.\n";
+
+         return getInteger(itemStr,2);
+    }
+    public Integer takeUserItem(Integer catalogSize){
+        return getInteger("Enter Item Number to add in the Cart",catalogSize);
+    }
+
+    public Integer showCart(String name,Cart cart){
+        String cartStr = " ".repeat(7) +"<<< " + name + "'s Cart >>> \n";
+        int cnt = 1;
+        for(Map.Entry<Item,Integer> pair : cart.getItemsList().entrySet()){
+            cartStr += Integer.toString(cnt) + ". " + pair.getKey().getName()
+                    + " Quantity: " + Integer.toString(pair.getValue())
+                    + ".\n";
+            cnt++;
+        }
+        cartStr += '\n';
+        return cartOptions(cartStr);
     }
     public Integer cartOptions(String cartStr){
         cartStr += " <<< Available Options >>> \n" +
                 "1. Check Out. \n" +
-                "2. Back to Catalog.\n";
+                "2. Go Back to Catalog.\n";
 
-        return getInteger(cartStr);
+        return getInteger(cartStr,2);
+    }
+
+    public void itemAdded(){
+        messageBox.createMessage("Item Added Successfully",'C');
+    }
+    public void payDelivered(){
+        messageBox.createMessage("Your Order has been Confirmed !", 'C');
+    }
+
+    public Integer mainMenu(){
+       messageBox.mainMenuMsg();
+       return getInteger("",3);
     }
 }
