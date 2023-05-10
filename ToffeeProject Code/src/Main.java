@@ -8,7 +8,7 @@ import gui.UserInterface;
  * @author Mohamed Essam
  * @author Maya Ayman
  * @author Rawan Younis
- * @client Dr.Mohammed El-Ramly.
+ * @Client Dr.Mohammed El-Ramly.
  */
 public class Main {
     public static void main(String[] args) {

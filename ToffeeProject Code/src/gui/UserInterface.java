@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class UserInterface {
     private InputOutput inputOutput = new InputOutput();
-    private User user = new User();
+    private User user;
     private Catalog catalog = new Catalog();
 
     /**
@@ -49,10 +49,16 @@ public class UserInterface {
                     register();
                     Thread.sleep(1000);
 
-                    logIn();
+                    if (user == null) {
+                        systemSteps();
+                    } else {
+                        logIn();
+                        Thread.sleep(1000);
+                        showCatalog();
+                    }
 
-                    Thread.sleep(1000);
-                    showCatalog();
+
+
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -61,7 +67,9 @@ public class UserInterface {
                 forgotPassword(user);
                 systemSteps();
             }
-            case 4 -> {
+            case 4 -> showCatalog();
+
+            case 5 -> {
                 inputOutput.exit();
                 System.exit(0);
             }
@@ -143,8 +151,8 @@ public class UserInterface {
      * @throws InterruptedException in case for database error
      */
     public void showCatalog() throws InterruptedException {
-        Integer choice = inputOutput.showCatalogInfo(catalog);
-        int cnt, catalogSize = catalog.getItems().size();
+        Integer choice = inputOutput.showCatalogInfo(catalog,user);
+        int cnt, catalogSize = catalog.getItems().size(),quantity = 1;
         // Show Item Details
         if(choice <= catalog.getItems().size()){
             cnt = 1;
@@ -152,6 +160,7 @@ public class UserInterface {
             for(Map.Entry<String,Item> pair : catalog.getItems().entrySet()){
                 if(cnt == choice){
                     choice = inputOutput.showItemInfo(pair.getValue());
+                    quantity = inputOutput.takeQuantityItem();
                     itemNeeded = pair.getValue();
                     break;
                 }
@@ -159,8 +168,15 @@ public class UserInterface {
             }
             switch (choice) {
                 case 1 -> {
-                    user.getCart().addToCart(itemNeeded);
-                    inputOutput.itemAdded();
+                    if(user == null){
+                        inputOutput.userNotRegistered();
+                    }
+                    else {
+                        for(int i = 0; i < quantity; ++i){
+                            user.getCart().addToCart(itemNeeded);
+                        }
+                        inputOutput.itemAdded();
+                    }
                     Thread.sleep(1000);
                     showCatalog();
                 }
@@ -169,42 +185,62 @@ public class UserInterface {
         }
         else{ // Add from Catalog.
             if(choice == catalogSize+1){
-                choice = inputOutput.takeUserItem(catalog.getItems().size());
-                cnt = 1;
-                Item itemNeeded = new Item();
-                for(Map.Entry<String,Item> pair : catalog.getItems().entrySet()) {
-                    if (cnt == choice) {
-                        itemNeeded = pair.getValue();
-                        break;
-                    }
-                    cnt++;
+                if(user == null){
+                    inputOutput.userNotRegistered();
                 }
-                user.getCart().addToCart(itemNeeded);
-                inputOutput.itemAdded();
+                else {
+                    choice = inputOutput.takeUserItem(catalog.getItems().size());
+                    quantity = inputOutput.takeQuantityItem();
+                    cnt = 1;
+                    Item itemNeeded = new Item();
+                    for (Map.Entry<String, Item> pair : catalog.getItems().entrySet()) {
+                        if (cnt == choice) {
+                            itemNeeded = pair.getValue();
+                            break;
+                        }
+                        cnt++;
+                    }
+                    for(int i = 0; i < quantity; ++i){
+                        user.getCart().addToCart(itemNeeded);
+                    }
+                    inputOutput.itemAdded();
+                }
                 Thread.sleep(1000);
                 showCatalog();
             }
             else if(choice == catalogSize + 2){
-                if(user.getCart().getItemsList().isEmpty()){
-                    inputOutput.emptyCart();
+                if(user == null){
+                    inputOutput.userNotRegistered();
                     Thread.sleep(1000);
                     showCatalog();
                 }
-                choice = showCart();
-                if(choice == 1){
-                    checkOut();
-                } else if (choice == 2){
-                    showCatalog();
-                }
-                else{
-                    user.getCart().getItemsList().clear();
-                    inputOutput.clearCart();
-                    Thread.sleep(1000);
-                    showCatalog();
+                else {
+                    if (user.getCart().getItemsList().isEmpty()) {
+                        inputOutput.emptyCart();
+                        Thread.sleep(1000);
+                        showCatalog();
+                    }
+                    choice = showCart();
+                    if (choice == 1) {
+                        checkOut();
+                    } else if (choice == 2) {
+                        showCatalog();
+                    } else {
+                        user.getCart().getItemsList().clear();
+                        inputOutput.clearCart();
+                        Thread.sleep(1000);
+                        showCatalog();
+                    }
                 }
             }
             else{
-                inputOutput.logOut();
+                if(user == null){
+                    inputOutput.returnBackToMainMenu();
+                }
+                else {
+                    inputOutput.logOut();
+                    user = null;
+                }
                 systemSteps();
             }
         }

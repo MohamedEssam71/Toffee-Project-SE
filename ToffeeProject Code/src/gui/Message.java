@@ -73,10 +73,11 @@ public class Message {
         System.out.println('+');
         String mainMenuStr = "|" + " ".repeat(5) + CYAN + "   TOFFEE PROJECT"
                 + RESET + " ".repeat(8) + "|\n" +
-                "| 1.Log-In" + " ".repeat(20) + "|\n" +
-                "| 2.Register" + " ".repeat(18) + "|\n" +
+                "| 1.Log-In" + " ".repeat(21) + "|\n" +
+                "| 2.Register" + " ".repeat(19) + "|\n" +
                 "| 3.Forgot Password?" + " ".repeat(11) + "|\n" +
-                "| 4.Exit" + " ".repeat(22) + "|\n" ;
+                "| 4.Continue as a Guest" + " ".repeat(8) + "|\n" +
+                "| 5.Exit" + " ".repeat(23) + "|\n" ;
         System.out.print(mainMenuStr);
         System.out.print('+');
         System.out.print(dashedLine);

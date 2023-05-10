@@ -100,7 +100,7 @@ public class DataBaseQueries {
      * @return boolean
      * @throws SQLException
      */
-    public boolean checkIfUserFound(User user) throws SQLException {
+    public boolean checkIfUserFound(User user, boolean isLogin) throws SQLException {
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultSet = null;
@@ -110,11 +110,20 @@ public class DataBaseQueries {
             resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()){
-
-                if(Objects.equals(resultSet.getString(2), user.getEmail())){
-                   if(Objects.equals(resultSet.getString(3),user.getPassword())){
+                if(isLogin) {
+                    if (Objects.equals(resultSet.getString(2), user.getEmail())) {
+                        if (Objects.equals(resultSet.getString(3), user.getPassword())) {
+                            return true;
+                        }
+                    }
+                }
+                else{
+                    if(Objects.equals(resultSet.getString(1),user.getUserName())){
                         return true;
-                   }
+                    }
+                    if(Objects.equals(resultSet.getString(2),user.getEmail())){
+                        return true;
+                    }
                 }
 
             }
@@ -272,8 +281,8 @@ public class DataBaseQueries {
         try (Connection connection = DataBaseSystem.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(update)) {
             // set the corresponding param
-            preparedStatement.setString(1, Email);
-            preparedStatement.setInt(2, newLoyaltyPoints);
+            preparedStatement.setString(2, Email);
+            preparedStatement.setInt(1, newLoyaltyPoints);
             // update
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

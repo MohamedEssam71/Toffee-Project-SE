@@ -41,7 +41,6 @@ public class InputOutput {
             String userName = takeUserNameInput();
             String email = takeEmailInput();
             String password = takePasswordInput();
-
             String phoneNumber = takePhoneNumberInput();
             Address address = takeAddressInput();
 
@@ -54,6 +53,8 @@ public class InputOutput {
             isRegistered = authenticationService.register(user);
             if (!isRegistered) {
                 messageBox.createMessage("User is Already Registered in System ", 'R');
+                scanner.nextLine();
+                return null;
             }
         }while(!isRegistered);
 
@@ -297,7 +298,7 @@ public class InputOutput {
      * @param catalog to show its details
      * @return the user choice in catalog page
      */
-    public Integer showCatalogInfo(Catalog catalog){
+    public Integer showCatalogInfo(Catalog catalog, User user){
         Integer CatalogSize = catalog.getItems().size();
 
         String catalogStr = " ".repeat(7)+"<<<Toffee Catalog>>>\n";
@@ -311,8 +312,14 @@ public class InputOutput {
         catalogStr += "Choose any Item to show in details \n\n" +
                 " ".repeat(1)+" <<< Other Available Options >>> \n" +
                 (CatalogSize + 1) + ".Add Item to Cart \n" +
-                (CatalogSize + 2) + ".Show Cart \n" +
-                (CatalogSize + 3) + ".Log-Out";
+                (CatalogSize + 2) + ".Show Cart \n";
+                if(user != null){
+                    catalogStr += (CatalogSize + 3) + ".Log-Out";
+                }
+                else{
+                    catalogStr += (CatalogSize + 3) + ".Go-Back to Main Page";
+                }
+
 
         return getInteger(catalogStr,CatalogSize+3);
     }
@@ -347,6 +354,16 @@ public class InputOutput {
         return getInteger("Enter Item Number to add in the Cart",catalogSize);
     }
 
+    /**
+     * This method takes item's quantity number from the user<br>
+     * so, he can buy more than one item at a time.
+     * @return the item quantity number
+     */
+    public Integer takeQuantityItem(){
+        validateIntegerInput("Enter Quantity for Item: ");
+        int quantity = scanner.nextInt();
+        return quantity;
+    }
     /**
      * This Method shows tha Cart menu to the user.<br>
      * @param name that shown in cart page
@@ -403,7 +420,7 @@ public class InputOutput {
      */
     public Integer mainMenu(){
        messageBox.mainMenuMsg();
-       return getInteger("",4);
+       return getInteger("",5);
     }
     /**
      * msg appears when user logs out.
@@ -497,4 +514,12 @@ public class InputOutput {
             throw new RuntimeException(e);
         }
     }
+
+    public void userNotRegistered(){
+        messageBox.createMessage("Can't Access, You are not registered ! \n",'R');
+    }
+    public void returnBackToMainMenu(){
+        messageBox.createMessage("Returning back loading...",'C');
+    }
+
 }

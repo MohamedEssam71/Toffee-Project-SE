@@ -80,7 +80,7 @@ public class AuthenticationService {
      */
     public boolean register(User user) throws SQLException {
         DataBaseQueries userDataBase = new DataBaseQueries();
-        boolean isFound = userDataBase.checkIfUserFound(user);
+        boolean isFound = userDataBase.checkIfUserFound(user,false);
         if (!isFound) {
             userDataBase.addUser(user);
             return true;
@@ -118,7 +118,7 @@ public class AuthenticationService {
         DataBaseQueries userDataBase = new DataBaseQueries();
         boolean isFound = false;
         try {
-            isFound = userDataBase.checkIfUserFound(tmpUser);
+            isFound = userDataBase.checkIfUserFound(tmpUser,true);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
