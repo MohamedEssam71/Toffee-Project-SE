@@ -160,7 +160,9 @@ public class UserInterface {
             for(Map.Entry<String,Item> pair : catalog.getItems().entrySet()){
                 if(cnt == choice){
                     choice = inputOutput.showItemInfo(pair.getValue());
-                    quantity = inputOutput.takeQuantityItem();
+                    if(user != null){
+                        quantity = inputOutput.takeQuantityItem();
+                    }
                     itemNeeded = pair.getValue();
                     break;
                 }
