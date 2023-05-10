@@ -64,7 +64,7 @@ public class Message {
     }
 
     /**
-     * This method shows the main menu formate to the user.
+     * This method shows the main menu format to the user.
      */
     public void mainMenuMsg(){
         String dashedLine = "-".repeat(28 + 2);
@@ -73,10 +73,10 @@ public class Message {
         System.out.println('+');
         String mainMenuStr = "|" + " ".repeat(5) + CYAN + "   TOFFEE PROJECT"
                 + RESET + " ".repeat(8) + "|\n" +
-                "| 1.Log-In." + " ".repeat(20) + "|\n" +
-                "| 2.Register." + " ".repeat(18) + "|\n" +
-                "| 3.Forget Password." + " ".repeat(11) + "|\n" +
-                "| 4.Exit." + " ".repeat(22) + "|\n" ;
+                "| 1.Log-In" + " ".repeat(20) + "|\n" +
+                "| 2.Register" + " ".repeat(18) + "|\n" +
+                "| 3.Forgot Password?" + " ".repeat(11) + "|\n" +
+                "| 4.Exit" + " ".repeat(22) + "|\n" ;
         System.out.print(mainMenuStr);
         System.out.print('+');
         System.out.print(dashedLine);

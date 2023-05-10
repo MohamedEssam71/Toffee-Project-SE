@@ -67,12 +67,12 @@ public class DataBaseQueries {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             Message messageBox = new Message();
-            messageBox.createMessage("User is Already in System",'R');
+            messageBox.createMessage("You Are Already Registered!",'R');
         }
     }
 
     /**
-     * it loads the database prepared statement with the user info.<br>
+     * It loads the database prepared statement with the user info.<br>
      * To be able to add the user to the system
      * @param preparedStatement the statement used by database
      * @param user that will be added to the database
@@ -126,7 +126,7 @@ public class DataBaseQueries {
     }
 
     /**
-     * Delete Any specified user from the database if not found, it does nothing.
+     * Delete any specified user from the database; if not found, it does nothing.
      * @param user
      * @Returns: void
      */
@@ -140,7 +140,7 @@ public class DataBaseQueries {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             Message messageBox = new Message();
-            messageBox.createMessage("Can't Remove ! User is not in the System",'R');
+            messageBox.createMessage("Can't Remove! User is not in the System",'R');
         }
     }
 
@@ -259,6 +259,27 @@ public class DataBaseQueries {
         item.setPrice(resultSet.getDouble(6));
     }
 
+    /**
+     * Update user's loyalty points
+     *
+     * @param newLoyaltyPoints: loyalty points of the customer after his/her new order
+     */
+    public void updateLoyaltyPoints(String Email, int newLoyaltyPoints) throws SQLException {
+        String update = "UPDATE User SET LoyaltyPoints = ? " +
+                "WHERE Email = ?";
+
+
+        try (Connection connection = DataBaseSystem.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(update)) {
+            // set the corresponding param
+            preparedStatement.setString(1, Email);
+            preparedStatement.setInt(2, newLoyaltyPoints);
+            // update
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
 
 

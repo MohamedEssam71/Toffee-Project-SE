@@ -124,7 +124,7 @@ public class InputOutput {
             passConfirm = scanner.nextLine();
 
             if (!pass.equals(passConfirm)) {
-                messageBox.createMessage("Two Password is not matching !", 'R');
+                messageBox.createMessage("Passwords Don't Match!", 'R');
             } else {
                 String encodedPassword = Base64.getEncoder().encodeToString(pass.getBytes());
                 return encodedPassword;
@@ -201,7 +201,7 @@ public class InputOutput {
      * @return Integer the user choice in checkout page.
      */
     public Integer checkOutOptions(){
-        String info = "Proceeding Check out ... \n\n " +
+        String info = "Proceeding to Check-Out... \n\n " +
                 "<<< Available Options >>> \n" +
                 "1.Enter a new Address. \n" +
                 "2.Use Address on System. \n";
@@ -219,7 +219,7 @@ public class InputOutput {
         String info = "Proceeding Check out ... \n\n " +
                 " ".repeat(7)+"<<< Available Options >>> \n" +
                 "1.Confirm Order. \n" +
-                "2.Decline Order (return to catalog page). \n";
+                "2.Cancel Order (return to catalog page). \n";
         return getInteger(info,2);
     }
 
@@ -310,9 +310,9 @@ public class InputOutput {
         }
         catalogStr += "Choose any Item to show in details \n\n" +
                 " ".repeat(1)+" <<< Other Available Options >>> \n" +
-                (CatalogSize + 1) + ".Add Item to Cart. \n" +
-                (CatalogSize + 2) + ".Show Cart. \n" +
-                (CatalogSize + 3) + ".Log-Out.";
+                (CatalogSize + 1) + ".Add Item to Cart \n" +
+                (CatalogSize + 2) + ".Show Cart \n" +
+                (CatalogSize + 3) + ".Log-Out";
 
         return getInteger(catalogStr,CatalogSize+3);
     }
@@ -332,8 +332,8 @@ public class InputOutput {
                  "Price: " + item.getPrice() + " L.E\n\n";
 
          itemStr += "<<< Available Options >>> \n" +
-                 "1. Add Item to Cart.\n" +
-                 "2. Go Back to Catalog.\n";
+                 "1. Add Item to Cart\n" +
+                 "2. Go Back to Catalog\n";
 
          return getInteger(itemStr,2);
     }
@@ -360,7 +360,7 @@ public class InputOutput {
             cartStr += Integer.toString(cnt) + ". " + pair.getKey().getName()
                     + " ".repeat(28 - pair.getKey().getName().length())
                     + "Quantity: " + Integer.toString(pair.getValue())
-                    + ".\n";
+                    + "\n";
             cnt++;
         }
         cartStr += '\n';
@@ -377,9 +377,9 @@ public class InputOutput {
      */
     public Integer cartOptions(String cartStr){
         cartStr += " ".repeat(6) + " <<< Available Options >>> \n" +
-                "1. Check Out. \n" +
-                "2. Go Back to Catalog.\n" +
-                "3.Empty Cart.\n";
+                "1. Check Out \n" +
+                "2. Go Back to Catalog\n" +
+                "3. Empty Cart.\n";
 
         return getInteger(cartStr,3);
     }

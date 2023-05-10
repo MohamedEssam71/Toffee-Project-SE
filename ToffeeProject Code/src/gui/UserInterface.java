@@ -126,11 +126,14 @@ public class UserInterface {
 
         choice = inputOutput.orderOptions();
         if(choice == 1) {
-            pay();
-            Thread.sleep(1000);
-            showCatalog();
-        }
-        else{
+            if (paymentMethod.makePayment(order)) {
+                pay();
+                Thread.sleep(1000);
+                showCatalog();
+            } else {
+                // Should show a message here that delivery pay option is unavailable
+            }
+        } else {
             showCatalog();
         }
     }
@@ -218,10 +221,18 @@ public class UserInterface {
         return inputOutput.showCart(user.getUserName(), user.getCart());
     }
     /**
-     * This method used to confirm or decline order.<br>
+     * This method used to confirm the order,<br>
+     * adjust loyalty points,
      * and make cart empty after that.
      */
-    public void pay(){
+    public void pay() {
+        DataBaseQueries dataBaseQueries = new DataBaseQueries();
+        user.setLoyaltyPoints(user.getLoyaltyPoints() + 50);
+        try {
+            dataBaseQueries.updateLoyaltyPoints(user.getEmail(), user.getLoyaltyPoints());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         inputOutput.payDelivered();
         Cart cart = new Cart();
         user.setCart(cart);

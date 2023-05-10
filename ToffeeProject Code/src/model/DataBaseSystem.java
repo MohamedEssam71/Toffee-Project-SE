@@ -12,8 +12,8 @@ public class DataBaseSystem {
     private static Connection connection;
 
     /**
-     * It Checks if the database file is accessable or not.<br>
-     * Then link a connection between the program and the database system.
+     * It Checks if the database file is accessible or not.<br>
+     * Then, link a connection between the program and the database system.
      * @return Connection that used later to connect with database
      * @throws SQLException to handle database errors
      */
