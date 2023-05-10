@@ -47,14 +47,18 @@ public class AuthenticationService {
 
     /**
      * This Method is used to validate Email Input.<br>
-     * Email input specifications:
-     * ???
+     * <h3>Email input specifications:</h3>
+     * <ul>
+     *     <li>Must be in the format (localpart@domain).</li>
+     *     <li>Must not contain two consecutive dots</li>
+     *     <li>Local and domain parts must start with alphanumeric characters only.</li>
+     * </ul>
      * @param email
      * @return boolean
      */
     public boolean validateEmail(String email) {
-        String pattern = "^(?!\\.|-|_|\\+)([aA-zZ0-9_+-](\\.)?)+" +
-                "@(?!\\.)[aA-zZ0-9_+-]+\\.(?!\\.)[a-zA-Z0-9-]+[a-zA-Z0-9-.]+$";
+        String pattern =  "^(?![.-_+])([aA-zZ0-9_+-](\\.)?)+" +
+                "@(?![.-_+])[aA-zZ0-9_+-]+\\.(?!\\.)[a-zA-Z0-9-]+[a-zA-Z0-9-.]+$";
         return email.matches(pattern);
     }
 
@@ -110,6 +114,14 @@ public class AuthenticationService {
         user.setPassword(IO.takePasswordInput());
     }
 
+    /**
+     * This method checks if a user with the
+     * given email and password exists in the database.
+     * @param email
+     * @param password
+     * @return boolean
+     * @throws RuntimeException to handle database errors
+     */
     public boolean login(String email, String password){
         User tmpUser = new User();
         tmpUser.setPassword(password);
@@ -125,6 +137,12 @@ public class AuthenticationService {
         return isFound;
     }
 
+    /**
+     * This Method returns a user with the given email.
+     * @param email
+     * @return User
+     * @throws RuntimeException to handle database errors
+     */
     public User getLoggedUser(String email){
         DataBaseQueries userDataBase = new DataBaseQueries();
         User user;
