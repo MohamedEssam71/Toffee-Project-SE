@@ -30,7 +30,7 @@ public class UserInterface {
      * This Method shows the system steps<br>
      * from the main menu page to catalog page,<br>
      * checkout page, receipt page ...
-     * @throws InterruptedException
+     * @throws InterruptedException in case of database error
      */
     public void systemSteps() throws InterruptedException {
         Integer choice = inputOutput.mainMenu();
@@ -84,8 +84,8 @@ public class UserInterface {
 
     /**
      * This method used to register a new user to the system.
-     * @return
-     * @throws SQLException
+     * @return user to be used later
+     * @throws SQLException to handle database errors
      */
     public User register() throws SQLException {
         user = inputOutput.takeUserInput();
@@ -94,7 +94,7 @@ public class UserInterface {
 
     /**
      * This method used to log into the system.
-     * @return
+     * @return user to be used later
      */
     public User logIn(){
         user = inputOutput.loginPage();
@@ -103,7 +103,7 @@ public class UserInterface {
 
     /**
      * This method used to enter a new password for a registered user.
-     * @param user
+     * @param user that want to change his password
      */
     public void forgotPassword(User user) {
         inputOutput.forgetPassword(user);
@@ -112,7 +112,7 @@ public class UserInterface {
     /**
      * This method contains check-out Logic.<br>
      * It shows how system will react to the user input.
-     * @throws InterruptedException
+     * @throws InterruptedException  in case of database error
      */
     public void checkOut() throws InterruptedException {
         user.getCart();
@@ -137,7 +137,7 @@ public class UserInterface {
     /**
      * This method contains catalog Logic.<br>
      * It shows how system will react to the user input.
-     * @throws InterruptedException
+     * @throws InterruptedException in case for database error
      */
     public void showCatalog() throws InterruptedException {
         Integer choice = inputOutput.showCatalogInfo(catalog);
@@ -212,7 +212,7 @@ public class UserInterface {
     /**
      * This method contains Cart Logic.<br>
      * It shows how system will react to the user input.
-     * @return Integer
+     * @return the user choice integer
      */
     public Integer showCart(){
         return inputOutput.showCart(user.getUserName(), user.getCart());

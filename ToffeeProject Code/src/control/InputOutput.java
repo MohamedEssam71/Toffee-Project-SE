@@ -29,8 +29,8 @@ public class InputOutput {
     /**
      * This Method takes all the user input as a template method,
      * and check weather he is registered or not.
-     * @return User
-     * @throws SQLException
+     * @return User that will be added to the system.
+     * @throws SQLException to handle database errors
      */
     public User takeUserInput() throws SQLException {
         User user = new User();
@@ -76,7 +76,7 @@ public class InputOutput {
 
     /**
      * It takes username input from user.
-     * @return String
+     * @return Username
      */
     public String takeUserNameInput(){
         System.out.print("Enter UserName: ");
@@ -85,7 +85,7 @@ public class InputOutput {
     }
     /**
      * It takes email input from user.
-     * @return String
+     * @return Email
      */
     public String takeEmailInput(){
         boolean isValidEmail;
@@ -105,7 +105,7 @@ public class InputOutput {
     /**
      * It takes password input from user.
      * and then encode the password.
-     * @return String
+     * @return Password
      */
     public String takePasswordInput(){
         String pass, passConfirm;
@@ -136,7 +136,7 @@ public class InputOutput {
     }
     /**
      * It takes Phone Number input from user.
-     * @return String
+     * @return the phone number
      */
     public String takePhoneNumberInput(){
         boolean isValidPhone;
@@ -154,7 +154,7 @@ public class InputOutput {
     }
     /**
      * It takes address input from user.
-     * @return Address
+     * @return Address of the user
      */
     public Address takeAddressInput(){
         System.out.println();
@@ -198,7 +198,7 @@ public class InputOutput {
      * <li>Enter new Address.</li>
      * <li>User Address on the System.</li>
      * </ol>
-     * @return Integer
+     * @return Integer the user choice in checkout page.
      */
     public Integer checkOutOptions(){
         String info = "Proceeding Check out ... \n\n " +
@@ -213,7 +213,7 @@ public class InputOutput {
      * <li>Confirm Order.</li>
      * <li>Decline Order (return to catalog page).</li>
      * </ol>
-     * @return Integer
+     * @return Integer the user choice in order page
      */
     public Integer orderOptions(){
         String info = "Proceeding Check out ... \n\n " +
@@ -226,9 +226,9 @@ public class InputOutput {
     /**
      * This Method takes integer input from the user<br>
      * and validate that user enters an integer not a string
-     * @param info
-     * @param optionSize
-     * @return Integer
+     * @param info the msg shown to the user
+     * @param optionSize the size of option menu
+     * @return Integer the user choice from the options
      */
     @NotNull
     public Integer getInteger(String info,int optionSize) {
@@ -255,7 +255,7 @@ public class InputOutput {
 
     /**
      * Validate that the user input is an Integer.
-     * @param option
+     * @param option the user choice
      */
     public void validateIntegerInput(String option){
         boolean isInt = false;
@@ -276,9 +276,9 @@ public class InputOutput {
 
     /**
      * This Method check that user enters a valid option number.
-     * @param chosenOption
-     * @param availableOptions
-     * @return boolean
+     * @param chosenOption the user choice number
+     * @param availableOptions the range of all available options
+     * @return boolean to identify weather input is integer or not.
      */
     public boolean checkCertainNumber(int chosenOption, ArrayList<Integer> availableOptions){
         for(int i : availableOptions){
@@ -294,8 +294,8 @@ public class InputOutput {
 
     /**
      * This Method shows tha catalog menu to the user.<br>
-     * @param catalog
-     * @return Integer
+     * @param catalog to show its details
+     * @return the user choice in catalog page
      */
     public Integer showCatalogInfo(Catalog catalog){
         Integer CatalogSize = catalog.getItems().size();
@@ -319,8 +319,8 @@ public class InputOutput {
 
     /**
      * This Method shows the Item specification to the user.<br>
-     * @param item
-     * @return Integer
+     * @param item to show its details
+     * @return the user choice from item page
      */
     public Integer showItemInfo(Item item){
          String itemStr = " ".repeat(5) +
@@ -340,8 +340,8 @@ public class InputOutput {
 
     /**
      * This Method takes the Item number from the user.<br>
-     * @param catalogSize
-     * @return Integer
+     * @param catalogSize to determine all the options numbers
+     * @return the user choice in item page
      */
     public Integer takeUserItem(Integer catalogSize){
         return getInteger("Enter Item Number to add in the Cart",catalogSize);
@@ -349,9 +349,9 @@ public class InputOutput {
 
     /**
      * This Method shows tha Cart menu to the user.<br>
-     * @param name
-     * @param cart
-     * @return Integer
+     * @param name that shown in cart page
+     * @param cart to load the data in the console
+     * @return the user choice in the cart
      */
     public Integer showCart(String name,Cart cart){
         String cartStr = " ".repeat(15-name.length()) +"<<< " + name + "'s Cart >>> \n";
@@ -372,8 +372,8 @@ public class InputOutput {
      * <li>Check Out</li>
      * <li>Return to catalog page</li>
      * <li>Empty the cart</li>
-     * @param cartStr
-     * @return Integer
+     * @param cartStr the content of the cart data
+     * @return the user option number
      */
     public Integer cartOptions(String cartStr){
         cartStr += " ".repeat(6) + " <<< Available Options >>> \n" +
@@ -399,7 +399,7 @@ public class InputOutput {
 
     /**
      * This Method shows the main menu page to the user.
-     * @return Integer
+     * @return the user option number.
      */
     public Integer mainMenu(){
        messageBox.mainMenuMsg();

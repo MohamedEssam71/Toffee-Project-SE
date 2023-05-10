@@ -17,8 +17,8 @@ public class Message {
 
     /**
      * This method create a msg format with different colors to the text.
-     * @param message
-     * @param color
+     * @param message the content that will be added inside the box.
+     * @param color to modify the text color in the msg box.
      */
     public void createMessage(@NotNull String message, char color) {
         if(message.isEmpty()) {

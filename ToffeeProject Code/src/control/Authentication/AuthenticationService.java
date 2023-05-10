@@ -75,8 +75,8 @@ public class AuthenticationService {
      * This Method is used to check if user found in the database or not,
      * Then add user to the database.
      * @param user
-     * @return boolean
-     * @throws SQLException
+     * @return boolean weather the user is registered or not
+     * @throws SQLException to handle database errors
      */
     public boolean register(User user) throws SQLException {
         DataBaseQueries userDataBase = new DataBaseQueries();

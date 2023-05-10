@@ -73,7 +73,7 @@ public class Address {
 
     /**
      * This method concatenates all address details in one String
-     * @return String
+     * @return String the address detailed in one line
      */
     public String toString() {
         return governorate + ", " + district + ", " + street + ",\n"

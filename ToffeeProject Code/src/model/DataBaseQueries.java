@@ -25,8 +25,8 @@ public class DataBaseQueries {
     /**
      * It takes a sql query string and,
      * print what is come from the query from the database.
-     * @param query
-     * @throws SQLException
+     * @param query to ask the database about anything
+     * @throws SQLException to handle database errors
      */
     public void askQuery(String query) throws SQLException {
         Connection connection;
@@ -54,7 +54,7 @@ public class DataBaseQueries {
     /**
      * Add a new user to the system database,<br>
      * If user is already found in the system it returns a message error.
-     * @param user
+     * @param user that will be added to the system.
      */
     public void addUser(User user){
         String insertUser = "INSERT INTO User(UserName,Email,Password,PhoneNumber,LoyaltyPoints," +
@@ -74,9 +74,9 @@ public class DataBaseQueries {
     /**
      * it loads the database prepared statement with the user info.<br>
      * To be able to add the user to the system
-     * @param preparedStatement
-     * @param user
-     * @throws SQLException
+     * @param preparedStatement the statement used by database
+     * @param user that will be added to the database
+     * @throws SQLException to handle database errors
      */
     private static void userPreparedStatement(PreparedStatement preparedStatement, User user)
             throws SQLException {

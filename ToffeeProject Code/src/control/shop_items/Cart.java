@@ -18,7 +18,7 @@ public class Cart {
     /**
      * This method allows the user to add an
      * item to his cart.
-     * @param item
+     * @param item that will be added
      */
     public void addToCart(Item item){
         itemsList.put(item, itemsList.getOrDefault(item, 0) + 1);
@@ -26,7 +26,7 @@ public class Cart {
     /**
      * This method allows the user to remove an
      * item from his cart.
-     * @param item
+     * @param item that will be removed
      */
     public void removeFromCart(Item item){
         itemsList.remove(item);

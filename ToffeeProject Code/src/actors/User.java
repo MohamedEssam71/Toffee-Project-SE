@@ -23,10 +23,10 @@ public class User {
 
     /**
      * Constructor that initializes the user data.
-     * @param userName
-     * @param email
-     * @param password
-     * @param phoneNumber
+     * @param userName the username
+     * @param email the email
+     * @param password the password
+     * @param phoneNumber the phone number
      */
     public User(String userName, String email, String password, String phoneNumber){
         this.email = email;
