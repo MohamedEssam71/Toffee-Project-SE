@@ -503,6 +503,7 @@ public class InputOutput {
                 loginFailed();
             }
             else{
+                messageBox.createMessage("Sending OTP, Please wait ...",'C');
                 if (authenticationService.forgotPassword(user)) {
                     authenticationService.resetPassword(user);
                     userDataBase.removeUser(user);

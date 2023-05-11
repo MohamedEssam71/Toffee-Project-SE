@@ -12,6 +12,8 @@
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/jetbrains/annotations/23.0.0/annotations-23.0.0.jar!/" />
           <root url="jar://$MODULE_DIR$/sqlite-jdbc-3.41.2.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/javax.mail-1.6.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/activation-1.1.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
