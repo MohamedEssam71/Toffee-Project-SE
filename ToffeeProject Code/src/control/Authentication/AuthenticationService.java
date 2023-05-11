@@ -2,6 +2,7 @@ package control.Authentication;
 
 import actors.User;
 import control.InputOutput;
+import gui.Message;
 import model.DataBaseQueries;
 import org.jetbrains.annotations.NotNull;
 
@@ -100,8 +101,21 @@ public class AuthenticationService {
      */
     public Boolean forgotPassword(@NotNull User user) {
         OTPManager otpManager = new OTPManager();
-        otpManager.generateOTP();
-        otpManager.sendOTP(user.getEmail());
+        boolean isSend = otpManager.sendOTP(user.getEmail());
+        Message messageBox  = new Message();
+        if(isSend){
+            messageBox.createMessage("OTP Send Successfully !",'C');
+        }
+        else{
+            messageBox.createMessage("Failed to send OTP code. \n" +
+                    "Check your internet connection and try again.",'R');
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            return false;
+        }
         return (otpManager.verifyOTP());
     }
 
