@@ -105,7 +105,7 @@ public class AuthenticationService {
         boolean isSent = otpManager.sendOTP(user.getEmail());
         Message messageBox  = new Message();
         if (isSent) {
-            messageBox.createMessage("OTP Send Successfully!",'C');
+            messageBox.createMessage("OTP Sent Successfully!",'C');
         } else {
             messageBox.createMessage("Failed to send OTP code.\n" +
                     "Check your internet connection and try again.",'R');
@@ -153,7 +153,7 @@ public class AuthenticationService {
 
     /**
      * This Method returns a user with the given email.
-     * @param email
+     * @param email: the email of the user who wants to log in
      * @return User
      * @throws RuntimeException to handle database errors
      */

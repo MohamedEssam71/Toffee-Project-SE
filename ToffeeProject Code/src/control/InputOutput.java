@@ -491,7 +491,8 @@ public class InputOutput {
 
     /**
      * Method is used to make user change his old password.
-     * @param user
+     * @param user: object User that represents
+     *           the customer who wants to change his/her password
      */
     public void forgetPassword(User user){
         System.out.print("Enter Email: ");
@@ -499,16 +500,17 @@ public class InputOutput {
         DataBaseQueries userDataBase = new DataBaseQueries();
         try {
             user = userDataBase.getUser(email);
-            if(user == null){
+            if (user == null) {
                 loginFailed();
-            }
-            else{
+            } else {
                 messageBox.createMessage("Sending OTP, Please wait ...",'C');
                 if (authenticationService.forgotPassword(user)) {
                     authenticationService.resetPassword(user);
                     userDataBase.removeUser(user);
                     userDataBase.addUser(user);
                     passwordUpdated();
+                } else {
+                    messageBox.createMessage("OTPs don't match!",'R');
                 }
             }
         } catch (SQLException e) {
@@ -517,10 +519,10 @@ public class InputOutput {
     }
 
     public void userNotRegistered(){
-        messageBox.createMessage("Can't Access, You are not registered ! \n",'R');
+        messageBox.createMessage("Can't Access, You are not registered! \n",'R');
     }
     public void returnBackToMainMenu(){
-        messageBox.createMessage("Returning back loading...",'C');
+        messageBox.createMessage("Returning Back...",'C');
     }
 
 }

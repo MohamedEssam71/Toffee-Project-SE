@@ -28,7 +28,6 @@ public class Order {
             totalPrice += entry.getKey().getPrice();
         }
         totalPrice += 30;
-//        adjustLoyaltyPoints();
     }
     /**
      * This method prints all the details of the order: items,
@@ -57,10 +56,6 @@ public class Order {
 //        System.out.println("Shipping To: " + customer.getAddress().toString());
     }
 
-//    private void adjustLoyaltyPoints() {
-//        int loyaltyPointsAdded = 50;
-//        this.customer.setLoyaltyPoints(this.customer.getLoyaltyPoints() + loyaltyPointsAdded);
-//    }
     public Double getTotalPrice() {
         return totalPrice;
     }
