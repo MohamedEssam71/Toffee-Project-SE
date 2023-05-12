@@ -76,7 +76,7 @@ public class Address {
      * @return String the address detailed in one line
      */
     public String toString() {
-        return governorate + ", " + district + ", " + street + ",\n"
+        return governorate + ", " + district + ", " + street + ", "
                 + landmark + ", " + buildingNumber + ", " + floor + ", " + flatNumber;
     }
 }

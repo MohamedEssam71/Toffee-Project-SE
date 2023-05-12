@@ -25,7 +25,7 @@ public class Order {
     public Order(@NotNull User customer) {
         this.customer = customer;
         for (Map.Entry<Item, Integer> entry : customer.getCart().getItemsList().entrySet()) {
-            totalPrice += entry.getKey().getPrice();
+            totalPrice += entry.getKey().getPrice() * entry.getValue();
         }
         totalPrice += 30;
     }
@@ -35,25 +35,22 @@ public class Order {
      * and shipping address.
      */
     public void showOrderDetails() {
-        System.out.println('\n');
-        String dashes = "-".repeat(14), line = "-".repeat(35);
+        System.out.println();
+        String dashes = "-".repeat(20), line = "-".repeat(47);
         System.out.println("   " + dashes + "Receipt" + dashes);
-        System.out.printf("   %-13s %-10s %-10s%n", "Item", "Qty.", "Price/Unit");
+        System.out.printf("   %-21s %-13s %-17s%n", "Item", "Qty.", "Price/Unit");
         System.out.println("   " + line);
-        int cnt = 0;
         for (Map.Entry<Item, Integer> entry : customer.getCart().getItemsList().entrySet()) {
             Item item = entry.getKey();
             int qty = entry.getValue();
-            System.out.print(++cnt);
-            System.out.print(". ");
-            System.out.printf("%-14s %-13d LE %.2f%n", item.getName(), qty, item.getPrice());
+            System.out.print("   ");
+            System.out.printf("%-21s %-13d LE %.2f%n", item.getName(), qty, item.getPrice());
         }
-        System.out.println('\n');
-//        System.out.println("   " + line);
-//        System.out.println("Delivery: 30 LE");
-//        System.out.println("Total Cost: " + totalPrice.toString() + " LE");
-//        System.out.println("\nNew Loyalty Points Balance: " + customer.getLoyaltyPoints().toString());
-//        System.out.println("Shipping To: " + customer.getAddress().toString());
+        System.out.println("   " + line);
+        System.out.println("   Delivery: 30 LE");
+        System.out.println("   Total Cost: " + totalPrice.toString() + " LE");
+        System.out.println("   New Loyalty Points Balance: " + customer.getLoyaltyPoints().toString());
+        System.out.println("   Shipping To: " + customer.getAddress().toString() + '\n');
     }
 
     public Double getTotalPrice() {
