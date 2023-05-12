@@ -1,18 +1,19 @@
 package control.Authentication;
 
+import java.util.Objects;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.util.Objects;
-import java.util.Properties;
-import java.util.Random;
-import java.util.Scanner;
 
 /**
  * This is the OTP manager class; it is responsible for
  * generating OTP, sending OTP, and verifying the OTP.
  *
  * @author Maya Ayman
+ * @author Mohamed Essam
  */
 public class OTPManager {
     private String OTP;
@@ -34,38 +35,39 @@ public class OTPManager {
 
         OTP = password.toString();
     }
-    /**
-     * This method displays the OTP on the console.
+        /**
+     * This method sends an OTP to
+     * the user's email.
+     * @param email: user's email
+     * @return boolean
      */
     public boolean sendOTP(String email) {
-        String to = "mohamed.089.essam@gmail.com";
-        String from = "messam.sde@gmail.com";
-        String password = "joagtyllxxpuinqn";
-        generateOTP(); // replace with your own OTP generation logic
+        String from = "mrmtoffee@gmail.com";
+        String password = "xufremtbjjziwyle";
 
-        Properties properties = new Properties();
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
+        generateOTP();
+
+        Properties properties = System.getProperties();
         properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.ssl.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", 465);
 
         Session session = Session.getInstance(properties, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
+            protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(from, password);
             }
         });
 
         try {
             MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(from));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            message.setSubject("Verification Code, Toffee Project");
-            message.setText("Please use the following code to change " +
-                    "your password.\n" +
-                    "OTP code: " + OTP);
+            message.setFrom(from);
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+            message.setSubject("Your One-Time Password (OTP)");
+            message.setText("Use this OTP to reset your password: " + OTP);
 
             Transport.send(message);
+            System.out.println("OTP sent successfully!");
         } catch (MessagingException ex) {
             return false;
         }
