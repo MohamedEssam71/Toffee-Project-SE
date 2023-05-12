@@ -98,16 +98,16 @@ public class AuthenticationService {
      * This method sends an OTP to allow the user to reset
      * his/her password.
      * @param user This is the only parameter to the method
+     * @return boolean
      */
     public Boolean forgotPassword(@NotNull User user) {
         OTPManager otpManager = new OTPManager();
-        boolean isSend = otpManager.sendOTP(user.getEmail());
+        boolean isSent = otpManager.sendOTP(user.getEmail());
         Message messageBox  = new Message();
-        if(isSend){
-            messageBox.createMessage("OTP Send Successfully !",'C');
-        }
-        else{
-            messageBox.createMessage("Failed to send OTP code. \n" +
+        if (isSent) {
+            messageBox.createMessage("OTP Send Successfully!",'C');
+        } else {
+            messageBox.createMessage("Failed to send OTP code.\n" +
                     "Check your internet connection and try again.",'R');
             try {
                 Thread.sleep(1000);
@@ -118,7 +118,7 @@ public class AuthenticationService {
         }
         return (otpManager.verifyOTP());
     }
-
+    
     /**
      * This method allow the user to reset his/her password.
      * @param user This is the only parameter to the method
