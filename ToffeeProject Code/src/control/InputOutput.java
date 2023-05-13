@@ -31,7 +31,8 @@ public class InputOutput {
 
     /**
      * This Method takes all the user input as a template method,
-     * and check weather he is registered or not.
+     * and check weather he is registered or not.<br>
+     * the registration is confirmed with otp verification code.
      * @return User that will be added to the system.
      * @throws SQLException to handle database errors
      */
