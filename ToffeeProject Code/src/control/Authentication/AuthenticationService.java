@@ -96,7 +96,7 @@ public class AuthenticationService {
 
     /**
      * This method sends an OTP to allow the user to reset
-     * his/her password.
+     * his/her password, confirm order, or confirm registration.
      * @param user This is the only parameter to the method
      * @return boolean
      */

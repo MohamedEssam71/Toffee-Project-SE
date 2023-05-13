@@ -560,6 +560,11 @@ public class InputOutput {
                 " Can't be paid in delivery!",'R');
     }
 
+    /**
+     * This method confirm the order by sending an otp msg to the user.
+     * @param user to get his email
+     * @return if the otp valid or not
+     */
     public boolean confirmOrder(User user){
         messageBox.createMessage("Sending OTP, Please wait ...",'C');
         if(authenticationService.checkOTP(user)){
@@ -569,6 +574,11 @@ public class InputOutput {
             return false;
         }
     }
+
+    /**
+     * This method show msg to the user.<br>
+     * its content: ' Order is Cancelled, invalid OTP! '
+     */
     public void orderCancelled(){
         messageBox.createMessage("Order is Cancelled, invalid OTP!",'R');
     }
