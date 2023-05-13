@@ -94,15 +94,9 @@ public class AuthenticationService {
         }
     }
 
-    /**
-     * This method sends an OTP to allow the user to reset
-     * his/her password.
-     * @param user This is the only parameter to the method
-     * @return boolean
-     */
-    public Boolean forgotPassword(@NotNull User user) {
+    public boolean verifyRegistration(String email){
         OTPManager otpManager = new OTPManager();
-        boolean isSent = otpManager.sendOTP(user.getEmail());
+        boolean isSent = otpManager.sendOTP(email);
         Message messageBox  = new Message();
         if (isSent) {
             messageBox.createMessage("OTP Sent Successfully!",'C');
@@ -117,6 +111,16 @@ public class AuthenticationService {
             return false;
         }
         return (otpManager.verifyOTP());
+    }
+
+    /**
+     * This method sends an OTP to allow the user to reset
+     * his/her password.
+     * @param user This is the only parameter to the method
+     * @return boolean
+     */
+    public Boolean forgotPassword(@NotNull User user) {
+        return verifyRegistration(user.getEmail());
     }
     
     /**

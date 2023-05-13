@@ -57,8 +57,6 @@ public class UserInterface {
                         showCatalog();
                     }
 
-
-
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
