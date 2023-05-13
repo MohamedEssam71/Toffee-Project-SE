@@ -539,15 +539,15 @@ public class InputOutput {
      * This Method print out the address information.
      */
     public void showAddress(User user){
-        String addressStr = "\n" + " ".repeat(3+12) + "<<< Current Address >>> \n" +
-                "   Governorate: " + " ".repeat(10 - user.getAddress().getGovernorate().length()) + user.getAddress().getGovernorate() + "\n" +
-                "   District: " + " ".repeat(13 - user.getAddress().getDistrict().length()) + user.getAddress().getDistrict() + "\n" +
-                "   LandMark: " + " ".repeat(14 - user.getAddress().getLandmark().length()) + user.getAddress().getLandmark() + "\n" +
-                "   Street: " + " ".repeat(16 - user.getAddress().getStreet().length()) + user.getAddress().getStreet() + "\n" +
-                "   Building Number: " + " ".repeat(2) + user.getAddress().getBuildingNumber() + "\n" +
-                "   Floor: " + " ".repeat(12) + user.getAddress().getFloor() + "\n" +
-                "   Flat: " + " ".repeat(13) + user.getAddress().getFlatNumber() + "\n";
-        System.out.println(addressStr);
+        String addressStr = " <<< Current Address >>> \n" +
+                "Governorate: " + " ".repeat(10 - user.getAddress().getGovernorate().length()) + user.getAddress().getGovernorate() + "\n" +
+                "District: " + " ".repeat(13 - user.getAddress().getDistrict().length()) + user.getAddress().getDistrict() + "\n" +
+                "LandMark: " + " ".repeat(14 - user.getAddress().getLandmark().length()) + user.getAddress().getLandmark() + "\n" +
+                "Street: " + " ".repeat(16 - user.getAddress().getStreet().length()) + user.getAddress().getStreet() + "\n" +
+                "Building Number: " + " ".repeat(2) + user.getAddress().getBuildingNumber() + "\n" +
+                "Floor: " + " ".repeat(12) + user.getAddress().getFloor() + "\n" +
+                "Flat: " + " ".repeat(13) + user.getAddress().getFlatNumber() + "\n";
+        messageBox.createMessage(addressStr,'W');
     }
 
     /**

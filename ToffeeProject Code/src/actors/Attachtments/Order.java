@@ -50,7 +50,6 @@ public class Order {
         System.out.println("   Delivery: 30 LE");
         System.out.println("   Total Cost: " + totalPrice.toString() + " LE");
         System.out.println("   New Loyalty Points Balance: " + customer.getLoyaltyPoints().toString());
-//        System.out.println("   Shipping To: " + customer.getAddress().toString() + '\n');
     }
 
     public Double getTotalPrice() {

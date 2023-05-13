@@ -131,7 +131,6 @@ public class UserInterface {
         Order order = new Order(user);
         PaymentMethod paymentMethod = new DeliveryPay();
         order.showOrderDetails();
-        inputOutput.showAddress(user);
 
         choice = inputOutput.orderOptions();
         if(choice == 1) {
@@ -232,6 +231,8 @@ public class UserInterface {
                     }
                     choice = showCart();
                     if (choice == 1) {
+                        inputOutput.showAddress(user);
+                        Thread.sleep(1000);
                         checkOut();
                     } else if (choice == 2) {
                         showCatalog();
