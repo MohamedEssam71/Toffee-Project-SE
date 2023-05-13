@@ -100,12 +100,13 @@ public class AuthenticationService {
      * @param user This is the only parameter to the method
      * @return boolean
      */
-    public Boolean forgotPassword(@NotNull User user) {
+    public Boolean checkOTP(@NotNull User user) {
         OTPManager otpManager = new OTPManager();
         boolean isSent = otpManager.sendOTP(user.getEmail());
         Message messageBox  = new Message();
         if (isSent) {
-            messageBox.createMessage("OTP Sent Successfully!",'C');
+            messageBox.createMessage("OTP Sent Successfully, Check your Email: " +
+                    user.getEmail(),'C');
         } else {
             messageBox.createMessage("Failed to send OTP code.\n" +
                     "Check your internet connection and try again.",'R');

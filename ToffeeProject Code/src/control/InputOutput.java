@@ -12,7 +12,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Map;
+import java.util.Scanner;
 
 /**
  * <h3>Input and Output Class</h3>
@@ -67,8 +70,8 @@ public class InputOutput {
      * This Method is output the registration form to the user
      */
     public void registerForm(){
-        String form = "Welcome to Registration Form Page\n";
-        form += "Some Notes\n Email Specification: Two dots can't appear after each other" +
+        String form = " ".repeat(20)+ "<<< Registration Form Page >>>\n";
+        form += " Some Notes:\n Email Specification: Two dots can't appear after each other" +
                 " \n Password Rules: at least one small, capital, number, symbol is needed" +
                 " \n Phone Rules: must start with valid prefixes eg:{010,011,012,015} \n";
         messageBox.createMessage(form,'W');
@@ -301,7 +304,7 @@ public class InputOutput {
     public Integer showCatalogInfo(Catalog catalog, User user){
         Integer CatalogSize = catalog.getItems().size();
 
-        String catalogStr = " ".repeat(7)+"<<<Toffee Catalog>>>\n";
+        String catalogStr = " ".repeat(9)+"<<<Toffee Catalog>>>\n";
         int catalogSize = catalog.getItems().size();
         int cnt = 1;
         for(Map.Entry<String,Item> pair : catalog.getItems().entrySet()){
@@ -504,7 +507,7 @@ public class InputOutput {
                 loginFailed();
             } else {
                 messageBox.createMessage("Sending OTP, Please wait ...",'C');
-                if (authenticationService.forgotPassword(user)) {
+                if (authenticationService.checkOTP(user)) {
                     authenticationService.resetPassword(user);
                     userDataBase.removeUser(user);
                     userDataBase.addUser(user);
@@ -518,11 +521,55 @@ public class InputOutput {
         }
     }
 
+    /**
+     * This Method shows a message to the guest user.<br>
+     * its content:<br> ' Can't Access, You are not registered! '
+     */
     public void userNotRegistered(){
         messageBox.createMessage("Can't Access, You are not registered! \n",'R');
     }
+    /**
+     * This Method shows a message to the guest user.<br>
+     * its content: ' Returning Back... '
+     */
     public void returnBackToMainMenu(){
         messageBox.createMessage("Returning Back...",'C');
     }
+    /**
+     * This Method print out the address information.
+     */
+    public void showAddress(User user){
+        String addressStr = "\n" + " ".repeat(3+12) + "<<< Current Address >>> \n" +
+                "   Governorate: " + " ".repeat(10 - user.getAddress().getGovernorate().length()) + user.getAddress().getGovernorate() + "\n" +
+                "   District: " + " ".repeat(13 - user.getAddress().getDistrict().length()) + user.getAddress().getDistrict() + "\n" +
+                "   LandMark: " + " ".repeat(14 - user.getAddress().getLandmark().length()) + user.getAddress().getLandmark() + "\n" +
+                "   Street: " + " ".repeat(16 - user.getAddress().getStreet().length()) + user.getAddress().getStreet() + "\n" +
+                "   Building Number: " + " ".repeat(2) + user.getAddress().getBuildingNumber() + "\n" +
+                "   Floor: " + " ".repeat(12) + user.getAddress().getFloor() + "\n" +
+                "   Flat: " + " ".repeat(13) + user.getAddress().getFlatNumber() + "\n";
+        System.out.println(addressStr);
+    }
 
+    /**
+     * This Method show a msg to the user
+     * its content:
+     * "The price is over 2000LE, Can't be paid in delivery!"
+     */
+    public void invalidPayment(){
+        messageBox.createMessage("The price is over 2000 LE," +
+                " Can't be paid in delivery!",'R');
+    }
+
+    public boolean confirmOrder(User user){
+        messageBox.createMessage("Sending OTP, Please wait ...",'C');
+        if(authenticationService.checkOTP(user)){
+            return true;
+        } else{
+            messageBox.createMessage("OTPs don't match!",'R');
+            return false;
+        }
+    }
+    public void orderCancelled(){
+        messageBox.createMessage("Order is Cancelled, invalid OTP!",'R');
+    }
 }

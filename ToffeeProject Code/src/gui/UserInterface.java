@@ -131,15 +131,23 @@ public class UserInterface {
         Order order = new Order(user);
         PaymentMethod paymentMethod = new DeliveryPay();
         order.showOrderDetails();
+        inputOutput.showAddress(user);
 
         choice = inputOutput.orderOptions();
         if(choice == 1) {
             if (paymentMethod.makePayment(order)) {
-                pay();
+                boolean confirmed = inputOutput.confirmOrder(user);
+                if(confirmed){
+                    pay();
+                } else{
+                    inputOutput.orderCancelled();
+                }
                 Thread.sleep(1000);
                 showCatalog();
             } else {
-                // Should show a message here that delivery pay option is unavailable
+                inputOutput.invalidPayment();
+                Thread.sleep(1000);
+                showCatalog();
             }
         } else {
             showCatalog();

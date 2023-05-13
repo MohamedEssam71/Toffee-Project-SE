@@ -1,12 +1,12 @@
 package control.Authentication;
 
-import java.util.Objects;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.Objects;
+import java.util.Properties;
+import java.util.Random;
+import java.util.Scanner;
 
 /**
  * This is the OTP manager class; it is responsible for
@@ -67,7 +67,6 @@ public class OTPManager {
             message.setText("Use this OTP to reset your password: " + OTP);
 
             Transport.send(message);
-            System.out.println("OTP sent successfully!");
         } catch (MessagingException ex) {
             return false;
         }
