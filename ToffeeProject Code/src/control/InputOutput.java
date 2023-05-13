@@ -37,8 +37,9 @@ public class InputOutput {
      */
     public User takeUserInput() throws SQLException {
         User user = new User();
+        DataBaseQueries userDataBase = new DataBaseQueries();
 
-        boolean isRegistered;
+        boolean isRegistered,isVerified;
         do {
             registerForm();
             String userName = takeUserNameInput();
@@ -59,7 +60,20 @@ public class InputOutput {
                 scanner.nextLine();
                 return null;
             }
+            messageBox.createMessage("Sending OTP, Please wait ...",'C');
+            isVerified = authenticationService.checkOTP(user);
+
+            if (!isVerified) {
+                messageBox.createMessage("OTPs don't match! ",'R');
+                messageBox.createMessage(" Registration failed, try again later! ",'R');
+                userDataBase.removeUser(user);
+                return null;
+            }
+
+
         }while(!isRegistered);
+
+
 
         messageBox.createMessage("User is Finally Registered",'C');
         scanner.nextLine();
