@@ -1,4 +1,4 @@
-# Toffee
+# Toffee Store
 
 ## Table of Contents
 
